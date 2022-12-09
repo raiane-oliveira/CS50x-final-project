@@ -1,0 +1,151 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Planning Sale
+{% endblock %}
+
+{% block main %}
+
+    {% if not session["user_id"] %}
+        <!-- Index without sale plan -->
+        <div class="container-index">
+                <section class="introduction-logo">
+                    <img src="/static/imgs/logo.svg" alt="Logo Planning Sale">
+                    <div class="texts-introduction">
+                        <h2>Meet your <span>sales planner</span>!</h2>
+                        <p>Organizes and manages the sales you want to make for you!</p>
+                    </div>
+                </section>
+            
+                <section class="introduction-buttons">
+                    <h3>Don't have a sale yet? Plan one now!</h3>
+                    <div class="buttons">
+                        <form action="/login">
+                            <button class="btn" type="submit">+ New Planning</button>
+                        </form>
+                        <div class="btn opacity"></div>
+                        <div class="btn opacity"></div>
+                        <div class="btn opacity"></div>
+                    </div>
+
+                <!-- Footer -->
+                <div class="footer">
+                    <p>CS50’s Introduction to Computer Science Final Project.</p>
+                    <p>
+                        Developed by <a href="#">Raiane Oliveira</a>. 
+                    </p>
+                </div>        
+            </section>
+        </div>
+    {% else %}
+        <!-- Index wth sale plan card -->
+        <div class="container-planSale">
+            {% if checkSalePlan != 0 %}
+                <section class="filter-sale">
+                    <div>
+                        <h2>Selling</h2>
+                        <hr>
+                    </div>
+
+                    {% if salePlan %}
+                        <section class="container-sale-plan-cards">
+
+                            {% for data in salePlan %}
+
+                                <!-- Form edit sale plan -->
+                                <div class="on-sale">
+                                    <span class="material-icons md-36">close</span>
+                                    
+                                    <section class="plansale-card">
+                                        <form action="/edit" method="post">
+                                            <div class="user-inputs name">
+                                                <label for="name">Product name</label>
+                                                <input autofocus autocomplete="off" name="name" id="name" required type="text">
+                                            </div>
+                            
+                                            <div class="user-inputs price">
+                                                <label for="price">Price product</label>
+                                                <input autocomplete="off" name="price" id="price" placeholder="$" required type="text">
+                                            </div>
+                        
+                                            <div class="user-inputs goal">
+                                                <label for="goal">Total goal you want to achieve</label>
+                                                <input autocomplete="off" name="goal" id="goal" placeholder="Ex. $2000.00" required type="text">
+                                            </div>
+                        
+                                            <div class="user-inputs date1">
+                                                <label for="date-start">Starting date</label>
+                                                <input autocomplete="off" name="date-start" id="date-start" type="date">
+                                            </div>
+                        
+                                            <div class="user-inputs date2">
+                                                <label for="date-end">Ending date</label>
+                                                <input autocomplete="off" name="date-end" id="date-end" type="date">
+                                            </div>
+                        
+                                            <div class="user-inputs stock">
+                                                <label for="stock">Amount stock</label>
+                                                <input autocomplete="off" name="stock" id="stock" required type="number" min="1">
+                                            </div>
+                        
+                                            <input name="id" type="hidden" value="{{ data.id }}">
+                                            <input class="btn-login-register" type="submit" value="Continue">
+                                        </form>
+                                    </section>
+                                </div>
+
+                                <!-- Card sale plan -->
+                                <div class="sale-plan-cards">
+                                    <h3>{{ data.name }}</h3>
+                                    <div class="data-sale-plan">
+                                        <p class="price">Price: R$ {{ data.price }}</p>
+                                        <p class="goal">Goal: R$ {{ data.goal }}</p>
+                                        <p class="stock">Stock: {{ data.stock }}</p>
+                                        <p class="d-start">Start: {{ data.date_start }}</p>
+                                        <p class="d-end">End: {{ data.date_end }}</p>
+                                        <div class="edit-sale-plan">
+
+                                            <!-- Edit sale plan -->
+                                            <button class="btn-sale-plan-edit click-btn">Edit</button>
+
+                                            <!-- delete sale plan -->
+                                            <form action="/delete" method="post">
+                                                <input name="id-del" value="{{ data.id }}" type="hidden">
+                                                <button type="submit" class="material-icons del md-36">delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+                        </section>
+                    {% endif %}
+                </section>
+
+                <section class="filter-sale">
+                    <div>
+                        <h2>Not started</h2>
+                        <hr>
+                    </div>
+
+                    <div class="sale-plan"></div>
+                </section>
+
+                <section class="filter-sale">
+                    <div>
+                        <h2>Sold</h2>
+                        <hr>
+                    </div>
+                    
+                    <div class="sale-plan"></div>
+                </section>
+            {% else %}
+                <section class="filter-sale">
+                    <h3>You haven't planned any sales yet :(</h3>
+                    <hr>
+                </section>
+            {% endif %}
+        </div>
+    {% endif %}
+
+{% endblock %}

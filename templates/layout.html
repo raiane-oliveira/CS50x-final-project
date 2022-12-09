@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width">
+        <meta charset="UTF-8">
+        <link rel="icon" href="static/imgs/logo.svg">
+        <link rel="stylesheet" href="static/style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <div class="background-sale"></div>
+        <div class="container">
+
+            <!-- Header -->
+            <header>
+                <nav class="menu">
+                    <a href="/"><h1 class="title-header">Planning Sale</h1></a>
+                    {% if session["user_id"] %}
+                        <div class="submenu">
+                            <a href="/">Home</a>
+                            <a href="/plansale">Plan a Sale</a>
+                        </div>
+
+                        <div class="submenu">
+                            <a href="/logout">Log out</a>
+                        </div>
+                    {% else %}
+                        <div class="submenu">
+                            <a href="/login">Login</a>
+                            <a href="/register">Sign Up</a>
+                        </div>
+                    {% endif %}
+                                        
+                    <div class="menu-toggle">
+                        <div class="one"></div>
+                        <div class="two"></div>
+                        <div class="three"></div>
+                    </div>
+                </nav>
+            </header>
+
+            <!-- Main -->
+            <main>
+                {% block main %}{% endblock %}
+            </main>
+        </div>
+
+        <!-- JavaScript -->
+        <script src="/static/script.js"></script>
+    </body>
+</html>

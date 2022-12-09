@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Planning Sale | Login
+{% endblock %}
+
+{% block main %}
+
+    <div class="container-login-register">
+        <section class="login-register-card">
+            <h2 class="title-login-register">Login</h2>
+
+            <form action="/login" method="post">
+                <div class="user-inputs">
+                    <label for="username">Username</label>
+                    <input autocomplete="off" autofocus id="username" name="username" required type="text">
+                </div>
+
+                <div class="user-inputs">
+                    <label for="password">Password</label>
+                    <input autocomplete="off" id="password" name="password" required type="password">
+                </div>
+                
+                <input class="btn-login-register" type="submit" value="Continue">
+            </form>
+
+            <p class="subtitle-login">Don't have an account yet? 
+                <a href="/register">Sign Up</a>
+            </p>
+        </section>
+    </div>
+
+{% endblock %}

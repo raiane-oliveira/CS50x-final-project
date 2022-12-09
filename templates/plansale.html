@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Planning Sale | Plan A Sale
+{% endblock %}
+
+{% block main %}
+
+    <div class="container-planSale">
+        <section class="filter-sale">
+            <div>
+                <h2>Selling</h2>
+                <hr>
+            </div>
+            
+            <button id="selling" class="btn click-btn">+ New Planning</button>
+            <div class="on-sale">
+                <span class="material-icons md-36">close</span>
+    
+                <section class="plansale-card">
+                    <form action="/plansale" method="post">
+                        <div class="user-inputs name">
+                            <label for="name">Product name</label>
+                            <input autofocus autocomplete="off" name="name" id="name" required type="text">
+                        </div>
+    
+                        <div class="user-inputs price">
+                            <label for="price">Price product</label>
+                            <input autocomplete="off" name="price" id="price" placeholder="$" required type="text">
+                        </div>
+    
+                        <div class="user-inputs goal">
+                            <label for="goal">Total goal you want to achieve</label>
+                            <input autocomplete="off" name="goal" id="goal" placeholder="Ex. $2000.00" required type="text">
+                        </div>
+    
+                        <div class="user-inputs date1">
+                            <label for="date-start">Starting date</label>
+                            <input autocomplete="off" name="date-start" id="date-start" type="date">
+                        </div>
+    
+                        <div class="user-inputs date2">
+                            <label for="date-end">Ending date</label>
+                            <input autocomplete="off" name="date-end" id="date-end" type="date">
+                        </div>
+    
+                        <div class="user-inputs stock">
+                            <label for="stock">Amount stock</label>
+                            <input autocomplete="off" name="stock" id="stock" required type="number" min="1">
+                        </div>
+    
+                        <input class="btn-login-register" type="submit" value="Continue">
+                    </form>
+                </section>
+    
+            </div>
+        </section>
+
+        <section class="filter-sale">
+            <div>
+                <h2>Not started</h2>
+                <hr>
+            </div>
+
+            <button id="not-started" class="btn click-btn">+ New Planning</button>
+        </section>
+
+        <section class="filter-sale">
+            <div class="title-filter">
+                <h2>Sold</h2>
+                <hr>
+            </div>
+            
+            <button id="sold" class="btn click-btn">+ New Planning</button>
+        </section>
+    </div>
+
+{% endblock %}
