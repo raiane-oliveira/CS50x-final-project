@@ -42,6 +42,7 @@ def index():
 
     # Seleciona os dados da venda planejada
     salePlan = None
+    card_salePlan = None
     if len(checkSalePlan) != 0:
         salePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)
         

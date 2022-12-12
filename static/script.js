@@ -22,12 +22,14 @@ menuToggle.addEventListener("click", () => {
 // }
 
 
-// Abre o card de formulário para planejar a venda
+// Abre o card de formulário para planejar a venda ou edita-la
 const buttonSale = document.querySelectorAll(".click-btn");
+const editButton = document.querySelectorAll(".form-edit")
 const onSale = document.querySelector(".on-sale");
 const backgroundSale = document.querySelector(".background-sale");
-const closePlanSale = document.querySelector(".material-icons");
+const closePlanSale = document.querySelectorAll(".material-icons");
 
+// Adiciona um novo card
 for (var i = 0; i < buttonSale.length; i++)
 {
     buttonSale[i].addEventListener("click", () => {
@@ -35,12 +37,44 @@ for (var i = 0; i < buttonSale.length; i++)
         onSale.style.display = "block";
         backgroundSale.style.display = "block";
     });
+    
+    closePlanSale[i].addEventListener("click", () => {
+        
+        onSale.style.display = "none";
+        backgroundSale.style.display = "none";
+    });
 }
 
-closePlanSale.addEventListener("click", () => {
-    
-    onSale.style.display = "none";
-    backgroundSale.style.display = "none";
+for (var j = 0; j < editButton.length; j++)
+{
+    editButton[j].addEventListener("submit", function(e) {
+
+        onSale.style.display = "block";
+        backgroundSale.style.display = "block";
+        e.preventDefault();
+    });
+
+    closePlanSale[j].addEventListener("click", () => {
+        
+        onSale.style.display = "none";
+        backgroundSale.style.display = "none";
+    });
+}
+
+// Senha visível ou não
+eye = document.querySelector(".visibility");
+password = document.getElementById("password")
+confirm_password = document.getElementById("confirm_password")
+
+eye.addEventListener("click", () => {
+    password.type = 'text';
+    confirm_password.type = 'text';
+});
+
+// // Para que a senha não fique exposta após mover a imagem
+eye.addEventListener("mousemove", () => {
+    password.type = 'password';
+    confirm_password.type = 'password';
 });
 
 
