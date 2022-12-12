@@ -55,14 +55,22 @@ for (var i = 0; i < buttonSale.length; i++)
         if (id == "selling")
         {
             form.setAttribute("id", "selling");
+
+            // Adicionar o valor ao id do formulário
+            document.querySelector("#id").setAttribute("value", "selling");
         }
         else if (id == "not-started")
         {
             form.setAttribute("id", "not-started");
+
+            document.querySelector("#id").setAttribute("value", "not-started");
         }
         else
         {
             form.setAttribute("id", "sold");
+
+            // Adicionar o valor ao id do formulário
+            document.querySelector("#id").setAttribute("value", "sold");
         }
     });
     
@@ -72,6 +80,7 @@ for (var i = 0; i < buttonSale.length; i++)
         backgroundSale.style.display = "none";
     });
 }
+
 
 
 // Senha visível ou não
