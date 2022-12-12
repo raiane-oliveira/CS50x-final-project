@@ -24,10 +24,24 @@ menuToggle.addEventListener("click", () => {
 
 // Abre o card de formulário para planejar a venda ou edita-la
 const buttonSale = document.querySelectorAll(".click-btn");
-const editButton = document.querySelectorAll(".form-edit")
 const onSale = document.querySelector(".on-sale");
 const backgroundSale = document.querySelector(".background-sale");
 const closePlanSale = document.querySelectorAll(".material-icons");
+
+// Seleciona o id dos filtros
+var element = 0;
+var id = 0;
+var form = document.querySelector(".form-planSale");
+
+document.querySelectorAll("button").forEach(function(button) {
+
+    button.addEventListener("click", function(event) {
+
+        element = event.target;
+        id = element.id;   
+        console.log(id)
+    });
+});
 
 // Adiciona um novo card
 for (var i = 0; i < buttonSale.length; i++)
@@ -37,6 +51,19 @@ for (var i = 0; i < buttonSale.length; i++)
         onSale.style.display = "block";
         backgroundSale.style.display = "block";
         e.preventDefault();
+
+        if (id == "selling")
+        {
+            form.setAttribute("id", "selling");
+        }
+        else if (id == "not-started")
+        {
+            form.setAttribute("id", "not-started");
+        }
+        else
+        {
+            form.setAttribute("id", "sold");
+        }
     });
     
     closePlanSale[i].addEventListener("click", () => {
@@ -45,6 +72,7 @@ for (var i = 0; i < buttonSale.length; i++)
         backgroundSale.style.display = "none";
     });
 }
+
 
 // Senha visível ou não
 eye = document.querySelector(".visibility");

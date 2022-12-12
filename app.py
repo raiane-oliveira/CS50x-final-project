@@ -45,20 +45,13 @@ def index():
     # Seleciona os dados da venda planejada
     salePlan = None
     card_salePlan = None
-    filter = None
-    
     if salePlan:
         
         # Recebe o id da venda planejada e seleciona os dados desse id
         id = request.form.get("id-edit")
         card_salePlan = db.execute("SELECT * FROM salesPlan WHERE id = ? AND user_id = ?", id, userID)
 
-        # Select filter
-        name_filter = request.form.get("id-filter")
-        filter = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", name_filter, userID)
-
-
-    return render_template("index.html", salePlan=salePlan, card=card_salePlan, filter=filter)
+    return render_template("index.html", salePlan=salePlan, card=card_salePlan)
 
 
 @app.route("/delete", methods=["POST"])
@@ -234,7 +227,7 @@ def plansale():
         if not check_price or not check_goal:
             return redirect("/plansale")
 
-        # Store price goal
+        # Store price and goal
         price = locale.atof(request.form.get("price").replace(',', '.'))
         price = locale.currency(price, grouping=True)
 
@@ -245,6 +238,7 @@ def plansale():
             goal = locale.atoi(request.form.get("goal-option"))
 
         # Store filter
+        id_filter = request.form.get("id-filter")
         filter = request.form.get("id")
 
         # Insert sale plan into the database
