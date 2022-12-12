@@ -7,6 +7,8 @@
 {% block main %}
 
     <div class="container-planSale">
+
+        <!-- Form card -->
         <div class="on-sale">
             <span class="material-icons md-36">close</span>
 
@@ -52,31 +54,38 @@
                 </form>
             </section> 
         </div>
+
         <section class="filter-sale">
-            <div>
-                <h2>Selling</h2>
-                <hr>
-            </div>
-            
-            <button id="selling" class="btn click-btn">+ New Planning</button>
+            <form method="post" class="click-btn">
+                <div>
+                    <h2>Selling</h2>
+                    <hr>
+                </div>
+                
+                <button name="selling" class="btn">+ New Planning</button>
+            </form>
         </section>
 
         <section class="filter-sale">
-            <div>
-                <h2>Not started</h2>
-                <hr>
-            </div>
+            <form method="post" class="click-btn">
+                <div>
+                    <h2>Not started</h2>
+                    <hr>
+                </div>
 
-            <button id="not-started" class="btn click-btn">+ New Planning</button>
+                <button name="not-started" class="btn click-btn">+ New Planning</button>
+            </form>
         </section>
 
         <section class="filter-sale">
-            <div class="title-filter">
-                <h2>Sold</h2>
-                <hr>
-            </div>
-            
-            <button id="sold" class="btn click-btn">+ New Planning</button>
+            <form method="post" class="click-btn">
+                <div class="title-filter">
+                    <h2>Sold</h2>
+                    <hr>
+                </div>
+                
+                <button name="sold" class="btn click-btn">+ New Planning</button>
+            </form>
         </section>
     </div>
 

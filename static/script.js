@@ -32,29 +32,14 @@ const closePlanSale = document.querySelectorAll(".material-icons");
 // Adiciona um novo card
 for (var i = 0; i < buttonSale.length; i++)
 {
-    buttonSale[i].addEventListener("click", () => {
-
-        onSale.style.display = "block";
-        backgroundSale.style.display = "block";
-    });
-    
-    closePlanSale[i].addEventListener("click", () => {
-        
-        onSale.style.display = "none";
-        backgroundSale.style.display = "none";
-    });
-}
-
-for (var j = 0; j < editButton.length; j++)
-{
-    editButton[j].addEventListener("submit", function(e) {
+    buttonSale[i].addEventListener("submit", function(e) {
 
         onSale.style.display = "block";
         backgroundSale.style.display = "block";
         e.preventDefault();
     });
-
-    closePlanSale[j].addEventListener("click", () => {
+    
+    closePlanSale[i].addEventListener("click", () => {
         
         onSale.style.display = "none";
         backgroundSale.style.display = "none";
