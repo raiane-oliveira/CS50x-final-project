@@ -2,7 +2,6 @@ import re
 import locale
 
 from datetime import datetime
-from PilLite import Image
 from cs50 import SQL
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
@@ -37,26 +36,37 @@ GOALS = [
 def index():
     """ Render index page apresentation"""
 
+    # Remember user id
+    userID = session["user_id"]
+
     # Checks if have a sale plan and change the index page se sim
-    checkSalePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)
+    salePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)
 
     # Seleciona os dados da venda planejada
     salePlan = None
     card_salePlan = None
-    if len(checkSalePlan) != 0:
-        salePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)
+    filter = None
+    
+    if salePlan:
         
         # Recebe o id da venda planejada e seleciona os dados desse id
         id = request.form.get("id-edit")
         card_salePlan = db.execute("SELECT * FROM salesPlan WHERE id = ? AND user_id = ?", id, userID)
 
+        # Select filter
+        name_filter = request.form.get("id-filter")
+        filter = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", name_filter, userID)
 
-    return render_template("index.html", checkSalePlan=len(checkSalePlan), salePlan=salePlan, card=card_salePlan)
+
+    return render_template("index.html", salePlan=salePlan, card=card_salePlan, filter=filter)
 
 
 @app.route("/delete", methods=["POST"])
 def delete():
     """Delete a sale plan"""
+
+    # Remember user id
+    userID = session["user_id"]
 
     # Gets sale plan id
     id = request.form.get("id-del")
@@ -70,6 +80,9 @@ def delete():
 @app.route("/edit", methods=["POST", "GET"])
 def edit():
     """Edit sale plan"""
+
+    # Remember user id
+    userID = session["user_id"]
 
     if request.method == "POST":
 
@@ -138,7 +151,6 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = user[0]["id"]
-        userID = user[0]["id"]
 
         return redirect("/")
 
@@ -195,6 +207,9 @@ def logout():
 def plansale():
     """Plan a sale of the user"""
 
+    # Remember user id
+    userID = session["user_id"]
+
     # route via POST
     if request.method == "POST":
 
@@ -222,15 +237,19 @@ def plansale():
         # Store price goal
         price = locale.atof(request.form.get("price").replace(',', '.'))
         price = locale.currency(price, grouping=True)
+
         if request.form.get("goal") == "Money goal":
             goal = locale.atof(request.form.get("goal-option").replace(',', '.'))
             goal = locale.currency(goal, grouping=True)
         else:
             goal = locale.atoi(request.form.get("goal-option"))
 
+        # Store filter
+        filter = request.form.get("id")
+
         # Insert sale plan into the database
-        db.execute("INSERT INTO salesPlan (name, price, goal, date_start, date_end, stock, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                name, price, goal, date_start, date_end, stock, userID)
+        db.execute("INSERT INTO salesPlan (name, price, goal, date_start, date_end, stock, filters, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                name, price, goal, date_start, date_end, stock, filter, userID)
         
         return redirect("/")
 
