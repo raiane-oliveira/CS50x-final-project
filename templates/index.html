@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Planning Sale
+    On The Sales
 {% endblock %}
 
 {% block main %}
@@ -50,67 +50,79 @@
                     {% if salePlan %}
                         <section class="container-sale-plan-cards">
 
-                            {% for data in salePlan %}
+                            {% for row in salePlan %}
 
-                                <!-- Form edit sale plan -->
-                                <div class="on-sale">
-                                    <span class="material-icons md-36">close</span>
-                                    
-                                    <section class="plansale-card">
-                                        <form action="/edit" method="post">
-                                            <div class="user-inputs name">
-                                                <label for="name">Product name</label>
-                                                <input autofocus autocomplete="off" name="name" id="name" required type="text">
-                                            </div>
+                                {% for data in card %}
+
+                                    <!-- Form edit sale plan -->
+                                    <div class="on-sale">
+                                        <span class="material-icons md-36">close</span>
+                                        
+                                        <section class="plansale-card">
+                                            <form action="/edit" method="post">
+                                                <div class="user-inputs name">
+                                                    <label for="name">Product name <span class="required">*</span></label>
+                                                    <input autofocus autocomplete="off" name="name" id="name" required type="text" value="{{ data.name }}">
+                                                </div>
                             
-                                            <div class="user-inputs price">
-                                                <label for="price">Price product</label>
-                                                <input autocomplete="off" name="price" id="price" placeholder="$" required type="text">
-                                            </div>
-                        
-                                            <div class="user-inputs goal">
-                                                <label for="goal">Total goal you want to achieve</label>
-                                                <input autocomplete="off" name="goal" id="goal" placeholder="Ex. $2000.00" required type="text">
-                                            </div>
-                        
-                                            <div class="user-inputs date1">
-                                                <label for="date-start">Starting date</label>
-                                                <input autocomplete="off" name="date-start" id="date-start" type="date">
-                                            </div>
-                        
-                                            <div class="user-inputs date2">
-                                                <label for="date-end">Ending date</label>
-                                                <input autocomplete="off" name="date-end" id="date-end" type="date">
-                                            </div>
-                        
-                                            <div class="user-inputs stock">
-                                                <label for="stock">Amount stock</label>
-                                                <input autocomplete="off" name="stock" id="stock" required type="number" min="1">
-                                            </div>
-                        
-                                            <input name="id" type="hidden" value="{{ data.id }}">
-                                            <input class="btn-login-register" type="submit" value="Continue">
-                                        </form>
-                                    </section>
-                                </div>
+                                                <div class="user-inputs price">
+                                                    <label for="price">Price product <span class="required">*</span></label>
+                                                    <input autocomplete="off" name="price" id="price" placeholder="$" required type="text" value="{{ data.price }}">
+                                                </div>
+                            
+                                                <div class="user-inputs goal">
+                                                    <label for="goal">
+                                                        Set goal: <span class="required">*</span>
+                                                        <select class="select-goal" name="goal" id="goal" required>
+                                                            <option value="Money goal">Money goal</option>
+                                                            <option value="Sales goal">Sales goal</option>
+                                                        </select>
+                                                    </label>
+                                                    <input autocomplete="off" name="goal-option" type="text" value="{{ data.goal }}">
+                                                </div>
+                            
+                                                <div class="user-inputs date1">
+                                                    <label for="date-start">Starting date</label>
+                                                    <input autocomplete="off" name="date-start" id="date-start" type="date" value="{{ data.start_date }}">
+                                                </div>
+                            
+                                                <div class="user-inputs date2">
+                                                    <label for="date-end">Ending date</label>
+                                                    <input autocomplete="off" name="date-end" id="date-end" type="date" value="{{ data.end_date }}">
+                                                </div>
+                            
+                                                <div class="user-inputs stock">
+                                                    <label for="stock">Amount stock <span class="required">*</span></label>
+                                                    <input autocomplete="off" name="stock" id="stock" required type="number" min="1" value="{{ data.stock }}">
+                                                </div>
+                            
+                                                <input type="hidden" name="id" value="{{ data.id }}">
+                                                <input class="btn-login-register" type="submit" value="Continue">
+                                            </form>
+                                        </section>
+                                    </div>    
+                                {% endfor %}
 
-                                <!-- Card sale plan -->
+                                <!-- Card sale plan --> 
                                 <div class="sale-plan-cards">
-                                    <h3>{{ data.name }}</h3>
+                                    <h3>{{ row.name }}</h3>
                                     <div class="data-sale-plan">
-                                        <p class="price">Price: R$ {{ data.price }}</p>
-                                        <p class="goal">Goal: R$ {{ data.goal }}</p>
-                                        <p class="stock">Stock: {{ data.stock }}</p>
-                                        <p class="d-start">Start: {{ data.date_start }}</p>
-                                        <p class="d-end">End: {{ data.date_end }}</p>
+                                        <p class="price">Price: {{ row.price }}</p>
+                                        <p class="goal">Goal: {{ row.goal }}</p>
+                                        <p class="stock">Stock: {{ row.stock }}</p>
+                                        <p class="d-start">Start: {{ row.date_start }}</p>
+                                        <p class="d-end">End: {{ row.date_end }}</p>
                                         <div class="edit-sale-plan">
 
                                             <!-- Edit sale plan -->
-                                            <button class="btn-sale-plan-edit click-btn">Edit</button>
+                                            <form class="form-edit" method="post">
+                                                <button class="btn-sale-plan-edit click-btn">Edit</button>
+                                                <input name="id-edit" value="{{ row.id }}" type="hidden">
+                                            </form>
 
-                                            <!-- delete sale plan -->
+                                            <!-- Delete sale plan -->
                                             <form action="/delete" method="post">
-                                                <input name="id-del" value="{{ data.id }}" type="hidden">
+                                                <input name="id-del" value="{{ row.id }}" type="hidden">
                                                 <button type="submit" class="material-icons del md-36">delete</button>
                                             </form>
                                         </div>
@@ -120,6 +132,7 @@
                             {% endfor %}
                         </section>
                     {% endif %}
+
                 </section>
 
                 <section class="filter-sale">
@@ -139,11 +152,14 @@
                     
                     <div class="sale-plan"></div>
                 </section>
+
             {% else %}
+
                 <section class="filter-sale">
                     <h3>You haven't planned any sales yet :(</h3>
                     <hr>
                 </section>
+
             {% endif %}
         </div>
     {% endif %}

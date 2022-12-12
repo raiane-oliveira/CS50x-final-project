@@ -42,3 +42,20 @@ closePlanSale.addEventListener("click", () => {
     onSale.style.display = "none";
     backgroundSale.style.display = "none";
 });
+
+
+// Senha visível ou não
+eye = document.querySelector(".visibility");
+password = document.getElementById("password")
+confirm_password = document.getElementById("confirm_password")
+
+eye.addEventListener("click", () => {
+    password.type = 'text';
+    confirm_password.type = 'text';
+});
+
+// // Para que a senha não fique exposta após mover a imagem
+eye.addEventListener("mousemove", () => {
+    password.type = 'password';
+    confirm_password.type = 'password';
+});

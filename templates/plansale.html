@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Planning Sale | Plan A Sale
+    On The Sales | Plan A Sale
 {% endblock %}
 
 {% block main %}
@@ -20,18 +20,24 @@
                 <section class="plansale-card">
                     <form action="/plansale" method="post">
                         <div class="user-inputs name">
-                            <label for="name">Product name</label>
+                            <label for="name">Product name <span class="required">*</span></label>
                             <input autofocus autocomplete="off" name="name" id="name" required type="text">
                         </div>
     
                         <div class="user-inputs price">
-                            <label for="price">Price product</label>
+                            <label for="price">Price product <span class="required">*</span></label>
                             <input autocomplete="off" name="price" id="price" placeholder="$" required type="text">
                         </div>
     
                         <div class="user-inputs goal">
-                            <label for="goal">Total goal you want to achieve</label>
-                            <input autocomplete="off" name="goal" id="goal" placeholder="Ex. $2000.00" required type="text">
+                            <label for="goal">
+                                Set goal: <span class="required">*</span>
+                                <select class="select-goal" name="goal" id="goal" required>
+                                    <option value="Money goal">Money goal</option>
+                                    <option value="Sales goal">Sales goal</option>
+                                </select>
+                            </label>
+                            <input autocomplete="off" name="goal-option" type="text">
                         </div>
     
                         <div class="user-inputs date1">
@@ -45,14 +51,13 @@
                         </div>
     
                         <div class="user-inputs stock">
-                            <label for="stock">Amount stock</label>
+                            <label for="stock">Amount stock <span class="required">*</span></label>
                             <input autocomplete="off" name="stock" id="stock" required type="number" min="1">
                         </div>
     
                         <input class="btn-login-register" type="submit" value="Continue">
                     </form>
-                </section>
-    
+                </section> 
             </div>
         </section>
 

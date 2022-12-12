@@ -1,11 +1,12 @@
 import re
+import locale
 
 from datetime import datetime
 from PilLite import Image
 from cs50 import SQL
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
-# from tempfile import mkdtemp
+from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
 # Configure application
@@ -19,15 +20,22 @@ Session(app)
 # Configure CS50 library to user SQLite database
 db = SQL("sqlite:///planningSale.db")
 
+# Configure locale library to format numbers in money format
+locale.setlocale(locale.LC_MONETARY, 'en_US.UTF-8')
+
+# Remember user ID for all functions
 userID = 0
+
+# List of goals options - Page Plan a Sale
+GOALS = [
+    "Money goal",
+    "Sales goal"
+]
 
 
 @app.route("/", methods=["POST", "GET"])
 def index():
     """ Render index page apresentation"""
-
-    # Remember current user id
-    userID = session["user_id"]
 
     # Checks if have a sale plan and change the index page se sim
     checkSalePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)
@@ -37,7 +45,12 @@ def index():
     if len(checkSalePlan) != 0:
         salePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)
         
-    return render_template("index.html", checkSalePlan=len(checkSalePlan), salePlan=salePlan)
+        # Recebe o id da venda planejada e seleciona os dados desse id
+        id = request.form.get("id-edit")
+        card_salePlan = db.execute("SELECT * FROM salesPlan WHERE id = ? AND user_id = ?", id, userID)
+
+
+    return render_template("index.html", checkSalePlan=len(checkSalePlan), salePlan=salePlan, card=card_salePlan)
 
 
 @app.route("/delete", methods=["POST"])
@@ -48,8 +61,8 @@ def delete():
     id = request.form.get("id-del")
 
     # Delete from database
-    db.execute("DELETE FROM salesPlan WHERE id = ? AND user_id = ?", id, session["user_id"])
-
+    if id:
+        db.execute("DELETE FROM salesPlan WHERE id = ? AND user_id = ?", id, userID)
     return redirect("/")
 
 
@@ -59,30 +72,41 @@ def edit():
 
     if request.method == "POST":
 
-        # Checks if the data is numeric
-        check_price = isnumber(request.form.get("price").replace(",", "."))
-        check_goal = isnumber(request.form.get("goal").replace(",", "."))
-        if not check_price or not check_goal:
+        # Checking erros
+        if not request.form.get("name") or not request.form.get("price") or not request.form.get("goal") or not request.form.get("stock"):
             return redirect("/")
 
-        # Store data from sale Plan
+        # Store data from sale planning
         id = request.form.get("id")
         name = request.form.get("name")
-        price = float(request.form.get("price").replace(",", "."))
-        goal = float(request.form.get("goal").replace(",", "."))
         date_start = request.form.get("date-start")
         date_end = request.form.get("date-end")
         stock = int(request.form.get("stock"))
 
-        # Checking erros
-        if not request.form.get("name") or not request.form.get("price") or not request.form.get("goal"):
+        # Checks if the data is numeric
+        check_price = isnumber(request.form.get("price").replace(",", "."))
+        check_goal = None
+        if request.form.get("goal") == "Money goal":
+            check_goal = isnumber(request.form.get("goal-option").replace(",", "."))
+        else:
+            check_goal = isnumber(request.form.get("goal-option"))
+
+        if not check_price or not check_goal:
             return redirect("/")
-        if not request.form.get("stock") or not request.form.get("date-start") or not request.form.get("date-end"):
-            return redirect("/")
+
+        # Store price and goal
+        price = locale.atof(request.form.get("price").replace(',', '.'))
+        price = locale.currency(price, grouping=True)
+
+        if request.form.get("goal") == "Money goal":
+            goal = locale.atof(request.form.get("goal-option").replace(',', '.'))
+            goal = locale.currency(goal, grouping=True)
+        else:
+            goal = locale.atoi(request.form.get("goal-option"))
 
         # Update the planning
         db.execute("UPDATE salesPlan SET name = ?, price = ?, goal = ?, date_start = ?, date_end = ?, stock = ? WHERE id = ? AND user_id = ?",
-                   name, price, goal, date_start, date_end, stock, id, session["user_id"])
+                   name, price, goal, date_start, date_end, stock, id, userID)
 
         return redirect("/")
 
@@ -113,6 +137,7 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = user[0]["id"]
+        userID = user[0]["id"]
 
         return redirect("/")
 
@@ -169,32 +194,38 @@ def logout():
 def plansale():
     """Plan a sale of the user"""
 
-    # Remember current user id
-    userID = session["user_id"]
-
     # route via POST
     if request.method == "POST":
 
-        # Checks if the data is numeric
-        check_price = isnumber(request.form.get("price").replace(",", "."))
-        check_goal = isnumber(request.form.get("goal").replace(",", "."))
-
-        if not check_price or not check_goal:
+        # Checking erros
+        if not request.form.get("name") or not request.form.get("price") or not request.form.get("goal") or not request.form.get("stock"):
             return redirect("/plansale")
 
-        # Store data from sale Plan
+        # Store data from sale planning
         name = request.form.get("name")
-        price = float(request.form.get("price").replace(",", "."))
-        goal = float(request.form.get("goal").replace(",", "."))
         date_start = request.form.get("date-start")
         date_end = request.form.get("date-end")
         stock = int(request.form.get("stock"))
 
-        # Checking erros
-        if not request.form.get("name") or not request.form.get("price") or not request.form.get("goal"):
+        # Checks if the data is numeric
+        check_price = isnumber(request.form.get("price").replace(",", "."))
+        check_goal = None
+        if request.form.get("goal") == "Money goal":
+            check_goal = isnumber(request.form.get("goal-option").replace(",", "."))
+        else:
+            check_goal = isnumber(request.form.get("goal-option"))
+
+        if not check_price or not check_goal:
             return redirect("/plansale")
-        if not request.form.get("stock") or not request.form.get("date-start") or not request.form.get("date-end"):
-            return redirect("/plansale")
+
+        # Store price goal
+        price = locale.atof(request.form.get("price").replace(',', '.'))
+        price = locale.currency(price, grouping=True)
+        if request.form.get("goal") == "Money goal":
+            goal = locale.atof(request.form.get("goal-option").replace(',', '.'))
+            goal = locale.currency(goal, grouping=True)
+        else:
+            goal = locale.atoi(request.form.get("goal-option"))
 
         # Insert sale plan into the database
         db.execute("INSERT INTO salesPlan (name, price, goal, date_start, date_end, stock, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)",

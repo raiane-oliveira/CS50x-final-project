@@ -310,6 +310,10 @@ button.btn:hover {
     font-size: 1.5rem;
 }
 
+.required {
+    color: rgb(191, 87, 87);
+}
+
 .subtitle-login a {
     color: #5D5340;
     text-decoration: underline;
@@ -332,8 +336,18 @@ button.btn:hover {
     font-size: 1.9rem;
 }
 
-.user-inputs label, .user-inputs input {
+.user-inputs:first-of-type label, .user-inputs input {
     padding: 0 30px;
+}
+
+.label-user-inputs {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+.visibility {
+    cursor: pointer;
 }
 
 .user-inputs input {
@@ -391,6 +405,10 @@ button.btn:hover {
     font-size: 2rem;
 }
 
+.user-inputs label {
+    padding: 0 30px;
+}
+
 /* Planning form card */
 .background-sale {
     display: none;
@@ -445,12 +463,22 @@ button.btn:hover {
                          "stock stock"
                          "button button";
     align-items: center;
-    justify-content: space-around;
     grid-gap: 0 20px;
 }
 
 .plansale-card .user-inputs {
     margin: 0;
+}
+
+.select-goal {
+    border: 1px solid #8CA87C;
+    border-radius: 18px;
+    background-color: transparent;
+
+    font-size: 1.5rem;
+    font-family: "Sarala", sans-serif;
+    padding: 0 5px;
+    margin-bottom: 7px;
 }
 
 .name {
@@ -614,10 +642,6 @@ button.btn:hover {
     .plansale-card form {
         width: 70%;
         font-size: 1.3rem;
-    }
-
-    .user-inputs label {
-        padding: 0;
     }
 
     .user-inputs input {
