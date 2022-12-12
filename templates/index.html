@@ -43,66 +43,66 @@
         <!-- Index wth sale plan card -->
         <div class="container-planSale">
             {% if salePlan %}
-                {% for row in salePlan %}
                     <section class="filter-sale">
                         <div>
                             <h2>Selling</h2>
                             <hr>
                         </div>
-
+                
                         <!-- Cards plans -->
                         <section class="container-sale-plan-cards">
-                            {% for data in card %}
+                        {% for data in card %}
+                        
+                            <!-- Form edit sale plan -->
+                            <div class="on-sale">
+                                <span class="material-icons md-36">close</span>
                             
-                                <!-- Form edit sale plan -->
-                                <div class="on-sale">
-                                    <span class="material-icons md-36">close</span>
-                                    
-                                    <section class="plansale-card">
-                                        <form action="/edit" method="post">
-                                            <div class="user-inputs name">
-                                                <label for="name">Product name <span class="required">*</span></label>
-                                                <input autofocus autocomplete="off" name="name" id="name" required type="text" value="{{ data.name }}">
-                                            </div>
-                        
-                                            <div class="user-inputs price">
-                                                <label for="price">Price product <span class="required">*</span></label>
-                                                <input autocomplete="off" name="price" id="price" placeholder="$" required type="text" value="{{ data.price }}">
-                                            </div>
-                        
-                                            <div class="user-inputs goal">
-                                                <label for="goal">
-                                                    Set goal: <span class="required">*</span>
-                                                    <select class="select-goal" name="goal" id="goal" required>
-                                                        <option value="Money goal">Money goal</option>
-                                                        <option value="Sales goal">Sales goal</option>
-                                                    </select>
-                                                </label>
-                                                <input autocomplete="off" name="goal-option" type="text" value="{{ data.goal }}">
-                                            </div>
-                        
-                                            <div class="user-inputs date1">
-                                                <label for="date-start">Starting date</label>
-                                                <input autocomplete="off" name="date-start" id="date-start" type="date" value="{{ data.start_date }}">
-                                            </div>
-                        
-                                            <div class="user-inputs date2">
-                                                <label for="date-end">Ending date</label>
-                                                <input autocomplete="off" name="date-end" id="date-end" type="date" value="{{ data.end_date }}">
-                                            </div>
-                        
-                                            <div class="user-inputs stock">
-                                                <label for="stock">Amount stock <span class="required">*</span></label>
-                                                <input autocomplete="off" name="stock" id="stock" required type="number" min="1" value="{{ data.stock }}">
-                                            </div>
-                        
-                                            <input type="hidden" name="id" value="{{ data.id }}">
-                                            <input class="btn-login-register" type="submit" value="Continue">
-                                        </form>
-                                    </section>
-                                </div>    
-                            {% endfor %}
+                                <section class="plansale-card">
+                                    <form action="/edit" method="post">
+                                        <div class="user-inputs name">
+                                            <label for="name">Product name <span class="required">*</span></label>
+                                            <input autofocus autocomplete="off" name="name" id="name" required type="text" value="{{ data.name }}">
+                                        </div>
+                    
+                                        <div class="user-inputs price">
+                                            <label for="price">Price product <span class="required">*</span></label>
+                                            <input autocomplete="off" name="price" id="price" placeholder="$" required type="text" value="{{ data.price }}">
+                                        </div>
+                    
+                                        <div class="user-inputs goal">
+                                            <label for="goal">
+                                                Set goal: <span class="required">*</span>
+                                                <select class="select-goal" name="goal" id="goal" required>
+                                                    <option value="Money goal">Money goal</option>
+                                                    <option value="Sales goal">Sales goal</option>
+                                                </select>
+                                            </label>
+                                            <input autocomplete="off" name="goal-option" type="text" value="{{ data.goal }}">
+                                        </div>
+                    
+                                        <div class="user-inputs date1">
+                                            <label for="date-start">Starting date</label>
+                                            <input autocomplete="off" name="date-start" id="date-start" type="date" value="{{ data.start_date }}">
+                                        </div>
+                    
+                                        <div class="user-inputs date2">
+                                            <label for="date-end">Ending date</label>
+                                            <input autocomplete="off" name="date-end" id="date-end" type="date" value="{{ data.end_date }}">
+                                        </div>
+                    
+                                        <div class="user-inputs stock">
+                                            <label for="stock">Amount stock <span class="required">*</span></label>
+                                            <input autocomplete="off" name="stock" id="stock" required type="number" min="1" value="{{ data.stock }}">
+                                        </div>
+                    
+                                        <input type="hidden" name="id" value="{{ data.id }}">
+                                        <input class="btn-login-register" type="submit" value="Continue">
+                                    </form>
+                                </section>
+                            </div>    
+                        {% endfor %}
 
+                        {% for row in salePlan %}
                             <!-- Card sale plan --> 
                             <div class="sale-plan-cards">
                                 <h3>{{ row.name }}</h3>
@@ -128,6 +128,7 @@
                                     </div>
                                 </div>
                             </div>
+                        {% endfor %}
                         </section>
                     </section>
 
@@ -304,7 +305,6 @@
                             </div>
                         </section>
                     </section>
-                {% endfor %}
             {% else %}
 
                 <section class="filter-sale">
