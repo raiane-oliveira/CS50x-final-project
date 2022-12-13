@@ -102,7 +102,7 @@
                             </div>    
                         {% endfor %}
 
-                        {% for row in salePlan %}
+                        {% for row in selling %}
                             <!-- Card sale plan --> 
                             <div class="sale-plan-cards">
                                 <h3>{{ row.name }}</h3>
@@ -191,31 +191,34 @@
                                 </div>    
                             {% endfor %}
 
-                            <!-- Card sale plan --> 
-                            <div class="sale-plan-cards">
-                                <h3>{{ row.name }}</h3>
-                                <div class="data-sale-plan">
-                                    <p class="price">Price: {{ row.price }}</p>
-                                    <p class="goal">Goal: {{ row.goal }}</p>
-                                    <p class="stock">Stock: {{ row.stock }}</p>
-                                    <p class="d-start">Start: {{ row.date_start }}</p>
-                                    <p class="d-end">End: {{ row.date_end }}</p>
-                                    <div class="edit-sale-plan">
+                            {% for row in not_started %}
 
-                                        <!-- Edit sale plan -->
-                                        <form class="form-edit click-btn" method="post">
-                                            <button class="btn-sale-plan-edit">Edit</button>
-                                            <input name="id-edit" value="{{ row.id }}" type="hidden">
-                                        </form>
+                                <!-- Card sale plan --> 
+                                <div class="sale-plan-cards">
+                                    <h3>{{ row.name }}</h3>
+                                    <div class="data-sale-plan">
+                                        <p class="price">Price: {{ row.price }}</p>
+                                        <p class="goal">Goal: {{ row.goal }}</p>
+                                        <p class="stock">Stock: {{ row.stock }}</p>
+                                        <p class="d-start">Start: {{ row.date_start }}</p>
+                                        <p class="d-end">End: {{ row.date_end }}</p>
+                                        <div class="edit-sale-plan">
 
-                                        <!-- Delete sale plan -->
-                                        <form action="/delete" method="post">
-                                            <input name="id-del" value="{{ row.id }}" type="hidden">
-                                            <button type="submit" class="material-icons del md-36">delete</button>
-                                        </form>
+                                            <!-- Edit sale plan -->
+                                            <form class="form-edit click-btn" method="post">
+                                                <button class="btn-sale-plan-edit">Edit</button>
+                                                <input name="id-edit" value="{{ row.id }}" type="hidden">
+                                            </form>
+
+                                            <!-- Delete sale plan -->
+                                            <form action="/delete" method="post">
+                                                <input name="id-del" value="{{ row.id }}" type="hidden">
+                                                <button type="submit" class="material-icons del md-36">delete</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            {% endfor %}
                         </section>
                     </section>
 
@@ -278,31 +281,34 @@
                                 </div>    
                             {% endfor %}
 
-                            <!-- Card sale plan --> 
-                            <div class="sale-plan-cards">
-                                <h3>{{ row.name }}</h3>
-                                <div class="data-sale-plan">
-                                    <p class="price">Price: {{ row.price }}</p>
-                                    <p class="goal">Goal: {{ row.goal }}</p>
-                                    <p class="stock">Stock: {{ row.stock }}</p>
-                                    <p class="d-start">Start: {{ row.date_start }}</p>
-                                    <p class="d-end">End: {{ row.date_end }}</p>
-                                    <div class="edit-sale-plan">
+                            {% for row in sold %}
 
-                                        <!-- Edit sale plan -->
-                                        <form class="form-edit click-btn" method="post">
-                                            <button class="btn-sale-plan-edit">Edit</button>
-                                            <input name="id-edit" value="{{ row.id }}" type="hidden">
-                                        </form>
+                                <!-- Card sale plan --> 
+                                <div class="sale-plan-cards">
+                                    <h3>{{ row.name }}</h3>
+                                    <div class="data-sale-plan">
+                                        <p class="price">Price: {{ row.price }}</p>
+                                        <p class="goal">Goal: {{ row.goal }}</p>
+                                        <p class="stock">Stock: {{ row.stock }}</p>
+                                        <p class="d-start">Start: {{ row.date_start }}</p>
+                                        <p class="d-end">End: {{ row.date_end }}</p>
+                                        <div class="edit-sale-plan">
 
-                                        <!-- Delete sale plan -->
-                                        <form action="/delete" method="post">
-                                            <input name="id-del" value="{{ row.id }}" type="hidden">
-                                            <button type="submit" class="material-icons del md-36">delete</button>
-                                        </form>
+                                            <!-- Edit sale plan -->
+                                            <form class="form-edit click-btn" method="post">
+                                                <button class="btn-sale-plan-edit">Edit</button>
+                                                <input name="id-edit" value="{{ row.id }}" type="hidden">
+                                            </form>
+
+                                            <!-- Delete sale plan -->
+                                            <form action="/delete" method="post">
+                                                <input name="id-del" value="{{ row.id }}" type="hidden">
+                                                <button type="submit" class="material-icons del md-36">delete</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            {% endfor %}
                         </section>
                     </section>
             {% else %}

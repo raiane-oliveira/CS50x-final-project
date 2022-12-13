@@ -42,7 +42,7 @@ def index():
     # Checks if have a sale plan and change the index page se sim
     salePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)
 
-    # Seleciona os dados da venda planejada
+    # Verifica se existe planejamentos de venda
     card_salePlan = None
     if salePlan:
         
@@ -50,8 +50,14 @@ def index():
         id = request.form.get("id-edit")
         card_salePlan = db.execute("SELECT * FROM salesPlan WHERE id = ? AND user_id = ?", id, userID)
 
-    return render_template("index.html", salePlan=salePlan, card=card_salePlan)
+        # Seleciona todas as vendas com o filtro escolhido pelo usuário
+        selling = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "selling", userID)
+        not_started = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "not-started", userID)
+        sold = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "sold", userID)
 
+        return render_template("index.html", salePlan=salePlan, card=card_salePlan, selling=selling, not_started=not_started, sold=sold)
+
+    return render_template("index.html", salePlan=salePlan)
 
 @app.route("/delete", methods=["POST"])
 def delete():
