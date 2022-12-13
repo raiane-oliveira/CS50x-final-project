@@ -21,7 +21,7 @@ menuToggle.addEventListener("click", () => {
 //     }
 // }
 
-// Abre o card de formulário para planejar a venda ou edita-la
+// Seleciona o formulário de planejar a venda 
 const formSale = document.querySelectorAll(".click-btn");
 const onSale = document.querySelector(".on-sale");
 const backgroundSale = document.querySelector(".background-sale");
@@ -29,7 +29,7 @@ const closePlanSale = document.querySelectorAll(".material-icons");
 
 // Seleciona o id dos filtros
 var id = 0;
-var form = document.querySelector(".form-planSale");
+var formOnSale = document.querySelector(".form-planSale");
 
 document.querySelectorAll("button").forEach(function(button) {
 
@@ -41,9 +41,10 @@ document.querySelectorAll("button").forEach(function(button) {
     });
 });
 
-for (var i = 0; i < formSale.length; i++)
-{
-    formSale[i].addEventListener("submit", function(e) {
+// Abre o card do formulário e adiciona um filtro pra cada um deles
+formSale.forEach(function(form) {
+
+    form.addEventListener("submit", function(e) {
 
         onSale.style.display = "block";
         backgroundSale.style.display = "block";
@@ -51,33 +52,37 @@ for (var i = 0; i < formSale.length; i++)
 
         if (id == "selling")
         {
-            form.setAttribute("id", "selling");
+            formOnSale.setAttribute("id", "selling");
 
-            // Adiciona o valor id do formulário
+            // Adiciona o id do formulário
             document.querySelector("#id").setAttribute("value", "selling");
         }
         else if (id == "not-started")
         {
-            form.setAttribute("id", "not-started");
+            formOnSale.setAttribute("id", "not-started");
 
+            // Adiciona o id do formulário
             document.querySelector("#id").setAttribute("value", "not-started");
         }
         else
         {
-            form.setAttribute("id", "sold");
+            formOnSale.setAttribute("id", "sold");
 
-            // Adicionar o valor ao id do formulário
+            // Adicionar o id do formulário
             document.querySelector("#id").setAttribute("value", "sold");
         }
     });
-    
-    closePlanSale[i].addEventListener("click", () => {
-        
-        onSale.style.display = "none";
-        backgroundSale.style.display = "none";
-    });
-}
 
+    closePlanSale.forEach(function(close) {
+
+        close.addEventListener("click", () => {
+
+            onSale.style.display = "none";
+            backgroundSale.style.display = "none";
+        });
+    });
+        
+});
 
 
 // Senha visível ou não
