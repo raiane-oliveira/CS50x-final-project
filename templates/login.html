@@ -7,6 +7,11 @@
 {% block main %}
 
     <div class="container-login-register">
+        {% if message %}
+            <div class="alert-danger">
+                {{ message }}
+            </div>
+        {% endif %}
         <section class="login-register-card">
             <h2 class="title-login-register">Login</h2>
 

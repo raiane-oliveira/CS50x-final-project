@@ -7,6 +7,11 @@
 {% block main %}
 
     <div class="container-planSale">
+        {% if message %}
+            <div class="alert-danger">
+                {{ message }}
+            </div>
+        {% endif %}
 
         <!-- Form card -->
         <div class="on-sale">
@@ -54,8 +59,9 @@
                     <input class="btn-login-register" type="submit" value="Continue">
                 </form>
             </section> 
-        </div>   
+        </div> 
 
+        <!-- Selling -->
         <section class="filter-sale">
             <div>
                 <h2>Selling</h2>
@@ -67,6 +73,7 @@
             </form>
         </section>
 
+        <!-- Not started -->
         <section class="filter-sale">
             <div>
                 <h2>Not started</h2>
@@ -78,6 +85,7 @@
             </form>
         </section>
 
+        <!-- Sold -->
         <section class="filter-sale">
             <div class="title-filter">
                 <h2>Sold</h2>

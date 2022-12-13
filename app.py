@@ -31,19 +31,22 @@ def index():
     """ Render index page apresentation"""
 
     # Remember user id
-    userID = session["user_id"]
+    if session.get("user_id"):
+        userID = session["user_id"]
 
-    # Checks if have a sale plan and change the index page if yes
-    salePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)    
-    if salePlan:
-        
-        # Seleciona todas as vendas com o filtro escolhido pelo usuário
-        selling = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "selling", userID)
-        not_started = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "not-started", userID)
-        sold = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "sold", userID)
+        # Checks if have a sale plan and change the index page if yes
+        salePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)    
+        if salePlan:
+            
+            # Seleciona todas as vendas com o filtro escolhido pelo usuário
+            selling = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "selling", userID)
+            not_started = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "not-started", userID)
+            sold = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "sold", userID)
 
-        return render_template("index.html", salePlan=salePlan, selling=selling, not_started=not_started, sold=sold)
+            return render_template("index.html", salePlan=salePlan, selling=selling, not_started=not_started, sold=sold)
+        return render_template("index.html", salePlan=salePlan)
 
+    salePlan = None
     return render_template("index.html", salePlan=salePlan)
 
 
@@ -54,10 +57,8 @@ def delete():
     # Remember user id
     userID = session["user_id"]
 
-    # Gets sale plan id
-    id = request.form.get("id-del")
-
     # Delete from database
+    id = request.form.get("id-del")
     if id:
         db.execute("DELETE FROM salesPlan WHERE id = ? AND user_id = ?", id, userID)
     return redirect("/")
@@ -72,9 +73,9 @@ def login():
 
         # Cheking erros
         if not request.form.get("username"):
-            return redirect("/login", message="You must provide a username")
+            return render_template("login.html", message="You must provide a username!")
         if not request.form.get("password"):
-            return redirect("/login", message="You must provide a password")
+            return render_template("login.html", message="You must provide a password!")
 
         # Store data
         username = request.form.get("username")
@@ -83,7 +84,7 @@ def login():
 
         # Ensure username and password match
         if len(user) != 1 or not check_password_hash(user[0]["hash"], password):
-            return redirect("/login", message="invalid password and/or username")
+            return render_template("login.html", message="invalid password and/or username")
 
         # Remember which user has logged in
         session["user_id"] = user[0]["id"]
@@ -111,11 +112,11 @@ def register():
 
         # Checking erros
         if not username or not password or not confirm_password:
-            return redirect("/register")
+            return render_template("register.html", message="blank fields!")
         if confirm_password != password:
-            return redirect("/register")
+            return render_template("register.html", message="passwords don't match!")
         if duplicate_username:
-            return redirect("/register")
+            return render_template("register.html", message="this username is already in use")
 
         # Change the password to hash code
         hash = generate_password_hash(password)
@@ -151,7 +152,7 @@ def plansale():
 
         # Checking erros
         if not request.form.get("name") or not request.form.get("price") or not request.form.get("goal") or not request.form.get("stock"):
-            return redirect("/plansale")
+            return render_template("plansale.html", message="Blank required fields!")
 
         # Store data from sale planning
         name = request.form.get("name")
@@ -168,7 +169,7 @@ def plansale():
             check_goal = isnumber(request.form.get("goal-option"))
 
         if not check_price or not check_goal:
-            return redirect("/plansale")
+            return render_template("plansale.html", message="Invalid price and/or goal!")
 
         # Store price and goal
         price = locale.atof(request.form.get("price").replace(',', '.'))
