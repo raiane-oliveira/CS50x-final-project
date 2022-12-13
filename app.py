@@ -25,12 +25,6 @@ locale.setlocale(locale.LC_MONETARY, 'en_US.UTF-8')
 # Remember user ID for all functions
 userID = 0
 
-# List of goals options - Page Plan a Sale
-GOALS = [
-    "Money goal",
-    "Sales goal"
-]
-
 
 @app.route("/", methods=["POST", "GET"])
 def index():
@@ -39,25 +33,19 @@ def index():
     # Remember user id
     userID = session["user_id"]
 
-    # Checks if have a sale plan and change the index page se sim
-    salePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)
-
-    # Verifica se existe planejamentos de venda
-    card_salePlan = None
+    # Checks if have a sale plan and change the index page if yes
+    salePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)    
     if salePlan:
         
-        # Recebe o id da venda planejada e seleciona os dados desse id
-        id = request.form.get("id-edit")
-        card_salePlan = db.execute("SELECT * FROM salesPlan WHERE id = ? AND user_id = ?", id, userID)
-
         # Seleciona todas as vendas com o filtro escolhido pelo usuário
         selling = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "selling", userID)
         not_started = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "not-started", userID)
         sold = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "sold", userID)
 
-        return render_template("index.html", salePlan=salePlan, card=card_salePlan, selling=selling, not_started=not_started, sold=sold)
+        return render_template("index.html", salePlan=salePlan, selling=selling, not_started=not_started, sold=sold)
 
     return render_template("index.html", salePlan=salePlan)
+
 
 @app.route("/delete", methods=["POST"])
 def delete():
@@ -72,56 +60,6 @@ def delete():
     # Delete from database
     if id:
         db.execute("DELETE FROM salesPlan WHERE id = ? AND user_id = ?", id, userID)
-    return redirect("/")
-
-
-@app.route("/edit", methods=["POST", "GET"])
-def edit():
-    """Edit sale plan"""
-
-    # Remember user id
-    userID = session["user_id"]
-
-    if request.method == "POST":
-
-        # Checking erros
-        if not request.form.get("name") or not request.form.get("price") or not request.form.get("goal") or not request.form.get("stock"):
-            return redirect("/")
-
-        # Store data from sale planning
-        id = request.form.get("id")
-        name = request.form.get("name")
-        date_start = request.form.get("date-start")
-        date_end = request.form.get("date-end")
-        stock = int(request.form.get("stock"))
-
-        # Checks if the data is numeric
-        check_price = isnumber(request.form.get("price").replace(",", "."))
-        check_goal = None
-        if request.form.get("goal") == "Money goal":
-            check_goal = isnumber(request.form.get("goal-option").replace(",", "."))
-        else:
-            check_goal = isnumber(request.form.get("goal-option"))
-
-        if not check_price or not check_goal:
-            return redirect("/")
-
-        # Store price and goal
-        price = locale.atof(request.form.get("price").replace(',', '.'))
-        price = locale.currency(price, grouping=True)
-
-        if request.form.get("goal") == "Money goal":
-            goal = locale.atof(request.form.get("goal-option").replace(',', '.'))
-            goal = locale.currency(goal, grouping=True)
-        else:
-            goal = locale.atoi(request.form.get("goal-option"))
-
-        # Update the planning
-        db.execute("UPDATE salesPlan SET name = ?, price = ?, goal = ?, date_start = ?, date_end = ?, stock = ? WHERE id = ? AND user_id = ?",
-                   name, price, goal, date_start, date_end, stock, id, userID)
-
-        return redirect("/")
-
     return redirect("/")
 
 
@@ -222,10 +160,10 @@ def plansale():
         stock = int(request.form.get("stock"))
 
         # Checks if the data is numeric
-        check_price = isnumber(request.form.get("price").replace(",", "."))
+        check_price = isnumber(request.form.get("price").replace(",", ""))
         check_goal = None
         if request.form.get("goal") == "Money goal":
-            check_goal = isnumber(request.form.get("goal-option").replace(",", "."))
+            check_goal = isnumber(request.form.get("goal-option").replace(",", ""))
         else:
             check_goal = isnumber(request.form.get("goal-option"))
 
@@ -243,7 +181,6 @@ def plansale():
             goal = locale.atoi(request.form.get("goal-option"))
 
         # Store filter
-        id_filter = request.form.get("id-filter")
         filter = request.form.get("id")
 
         # Insert sale plan into the database

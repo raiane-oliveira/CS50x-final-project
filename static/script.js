@@ -21,15 +21,13 @@ menuToggle.addEventListener("click", () => {
 //     }
 // }
 
-
 // Abre o card de formulário para planejar a venda ou edita-la
-const buttonSale = document.querySelectorAll(".click-btn");
+const formSale = document.querySelectorAll(".click-btn");
 const onSale = document.querySelector(".on-sale");
 const backgroundSale = document.querySelector(".background-sale");
 const closePlanSale = document.querySelectorAll(".material-icons");
 
 // Seleciona o id dos filtros
-var element = 0;
 var id = 0;
 var form = document.querySelector(".form-planSale");
 
@@ -37,16 +35,15 @@ document.querySelectorAll("button").forEach(function(button) {
 
     button.addEventListener("click", function(event) {
 
-        element = event.target;
+        var element = event.target;
         id = element.id;   
         console.log(id)
     });
 });
 
-// Adiciona um novo card
-for (var i = 0; i < buttonSale.length; i++)
+for (var i = 0; i < formSale.length; i++)
 {
-    buttonSale[i].addEventListener("submit", function(e) {
+    formSale[i].addEventListener("submit", function(e) {
 
         onSale.style.display = "block";
         backgroundSale.style.display = "block";
@@ -56,7 +53,7 @@ for (var i = 0; i < buttonSale.length; i++)
         {
             form.setAttribute("id", "selling");
 
-            // Adicionar o valor ao id do formulário
+            // Adiciona o valor id do formulário
             document.querySelector("#id").setAttribute("value", "selling");
         }
         else if (id == "not-started")
