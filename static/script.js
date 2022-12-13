@@ -37,7 +37,6 @@ document.querySelectorAll("button").forEach(function(button) {
 
         var element = event.target;
         id = element.id;   
-        console.log(id)
     });
 });
 

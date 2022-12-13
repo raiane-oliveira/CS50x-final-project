@@ -153,17 +153,21 @@ def plansale():
         # Checking erros
         if not request.form.get("name") or not request.form.get("price") or not request.form.get("goal") or not request.form.get("stock"):
             return render_template("plansale.html", message="Blank required fields!")
+        if request.form.get("goal") not in ["Money goal", "Sales goal"]:
+            return render_template("plansale.html", message="Invalid type of goal")
 
         # Store data from sale planning
         name = request.form.get("name")
         date_start = request.form.get("date-start")
         date_end = request.form.get("date-end")
         stock = int(request.form.get("stock"))
+        goal_type = request.form.get("goal")
 
         # Checks if the data is numeric
         check_price = isnumber(request.form.get("price").replace(",", ""))
         check_goal = None
-        if request.form.get("goal") == "Money goal":
+
+        if goal_type == "Money goal":
             check_goal = isnumber(request.form.get("goal-option").replace(",", ""))
         else:
             check_goal = isnumber(request.form.get("goal-option"))
@@ -175,7 +179,7 @@ def plansale():
         price = locale.atof(request.form.get("price").replace(',', '.'))
         price = locale.currency(price, grouping=True)
 
-        if request.form.get("goal") == "Money goal":
+        if goal_type == "Money goal":
             goal = locale.atof(request.form.get("goal-option").replace(',', '.'))
             goal = locale.currency(goal, grouping=True)
         else:
@@ -185,9 +189,9 @@ def plansale():
         filter = request.form.get("id")
 
         # Insert sale plan into the database
-        db.execute("INSERT INTO salesPlan (name, price, goal, date_start, date_end, stock, filters, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                name, price, goal, date_start, date_end, stock, filter, userID)
-        
+        db.execute("INSERT INTO salesPlan (name, price, goal, date_start, date_end, stock, filters, goal_options, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                name, price, goal, date_start, date_end, stock, filter, goal_type, userID)
+
         return redirect("/")
 
     # route via GET

@@ -161,34 +161,36 @@ button.btn:hover {
 
 .sale-plan-cards {
     width: 400px;
-    height: 250px;
     padding: 20px;
-
+    
     border-radius: 20px;
     background-color: #768d69;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
     
+    height: 100%;
     color: #FFF9F3;
-}
-
-.sale-plan-cards h3 {
-    padding-bottom: 10px;
-    border-bottom: 0.4px solid #FFF9F3;
 }
 
 .data-sale-plan {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
-    grid-template-areas: "price stock"
+    grid-template-areas: "name name"
+                         "price stock"
                          "goal goal"
                          "d-start d-end"
+                         "no-d no-d"
                          "edit edit";
     grid-gap: 5px;
-    margin-top: 10px;
 
     font-family: "Sarala", sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+}
+
+.sale-plan-cards h3 {
+    grid-area: name;
+    padding-bottom: 10px;
+    border-bottom: 0.4px solid #FFF9F3;
 }
 
 .price {
@@ -211,32 +213,17 @@ button.btn:hover {
     grid-area: d-end;
 }
 
-.edit-sale-plan {
+.no-d {
+    text-align: center;
+    grid-area: no-d;
+}
+
+.del-sale-plan {
     display: flex;
     justify-content: end;
 
     grid-area: edit;
     margin-top: 30px;
-}
-
-.btn-sale-plan-edit {
-    width: 100%;
-    height: 80%;
-    cursor: pointer;
-    
-    border: none;
-    border-radius: 10px;
-    background-color: #FCF4EC;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
-    color: #768d69;
-
-    font-family: "Sarala", sans-serif;
-    font-size: 1.6rem;
-}
-
-.btn-sale-plan-edit:hover {
-    background-color: #8CA87C;
-    color: #FCF4EC;
 }
 
 .material-icons.md-36.del {
@@ -269,8 +256,8 @@ button.btn:hover {
 
 /* Active link and Disable Hover*/
 .active {
-    color: #8CA87C;
-    border-bottom: .4px solid #8CA87C;
+    color: #AB8742;
+    border-bottom: .4px solid #AB8742;
 }
 
 /* Main Login/Register page */
