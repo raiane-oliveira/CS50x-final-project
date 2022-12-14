@@ -1,7 +1,7 @@
 /* fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Sarala&display=swap');
 
-/* Formatação padrão */
+/* Formatação geral */
 * {
     margin: 0;
     padding: 0;
@@ -18,6 +18,10 @@ html {
 a {
     text-decoration: none;
     color: black;
+}
+
+.material-icons {
+    cursor: pointer;
 }
 
 /* Container principal */
@@ -119,6 +123,7 @@ header {
     font-family: "Montserrat", sans-serif;
     font-weight: 600;
     font-size: 2.2rem;
+    text-align: center;
     color: #FFF9F3;
 }
 
@@ -160,20 +165,16 @@ button.btn:hover {
     scroll-behavior: smooth;
 }
 
-.container-sale-plan-cards::-webkit-scrollbar {
+::-webkit-scrollbar {
     height: 10px;
+    width: 15px;
     border-radius: 10px;
     background-color: #efe3d7;
 }
 
-.container-sale-plan-cards::-webkit-scrollbar-thumb {
-    background-color: #5D5340;
-    width: 10px;
+::-webkit-scrollbar-thumb {
+    background-color: #292929;
     border-radius: 20px;
-}
-
-::-webkit-scrollbar {
-    background-color: transparent;
 }
 
 .sale-plan-cards {
@@ -369,10 +370,6 @@ button.btn:hover {
     margin-right: 30px;
 }
 
-.visibility {
-    cursor: pointer;
-}
-
 .user-inputs input, .user-inputs textarea {
     border: 1.5px solid #8CA87C;
     border-radius: 18px;
@@ -462,7 +459,6 @@ button.btn:hover {
 
 .material-icons.md-36 {
     font-size: 36px;
-    cursor: pointer;
 }
 
 .on-sale .material-icons.md-36 {
@@ -663,6 +659,15 @@ button.btn:hover {
         line-height: 8rem;
         border: none;
     }
+
+    /* Login/register card */
+    .container-login-register {
+        flex-direction: row;
+    }
+
+    .label-user-inputs .md-18 {
+        font-size: 20px;
+    }
 }
 
 @media (max-width: 460px) {
@@ -676,7 +681,11 @@ button.btn:hover {
         font-size: 1.3rem;
     }
 
-    .user-inputs input {
+    .user-inputs label, .user-inputs:first-of-type label {
+        padding: 0 10px;
+    }
+
+    .user-inputs input, .user-inputs textarea {
         width: 90%;
         padding-left: 10px;
         font-size: 1.7rem;
