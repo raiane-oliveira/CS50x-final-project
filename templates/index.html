@@ -56,7 +56,6 @@
                         {% for row in selling %}
                             <div class="sale-plan-cards">
                                 <h3>{{ row.name }}</h3>
-                                {{id}}
                                 <div class="data-sale-plan">
                                     <p class="price">Price: {{ row.price }}</p>
                                     <p class="stock">Stock: {{ row.stock }}</p>
@@ -94,26 +93,31 @@
                     <!-- Cards plans -->
                     <section class="container-sale-plan-cards">
                         {% for row in not_started %}
-                            <div class="sale-plan-cards">
-                                <h3 class="title-sale-plan">{{ row.name }}</h3>
-                                <div class="data-sale-plan">
-                                    <p class="price">Price: {{ row.price }}</p>
-                                    <p class="goal">{{ row.goal_options }}: {{ row.goal }}</p>
-                                    <p class="stock">Stock: {{ row.stock }}</p>
-                                    {% if row.date_start or row_date_end %}
-                                        <p class="d-start">Start: {{ row.date_start }}</p>
-                                        <p class="d-end">End: {{ row.date_end }}</p>
-                                    {% else %}
-                                        <p class="no-d">No start or end dates for sales</p>
-                                    {% endif %}
+                        <div class="sale-plan-cards">
+                            <h3>{{ row.name }}</h3>
+                            <div class="data-sale-plan">
+                                <p class="price">Price: {{ row.price }}</p>
+                                <p class="stock">Stock: {{ row.stock }}</p>
+                                <p class="goal">{{ row.goal_options }}: {{ row.goal }}</p>
+                                {% if row.date_start or row.date_end %}
+                                    <p class="d-start">Start: {{ row.date_start }}</p>
+                                    <p class="d-end">End: {{ row.date_end }}</p>
+                                {% else %}
+                                    <p class="no-d">No start or end dates for sales</p>
+                                {% endif %}
+                                {% if row.notes %}
+                                    <p class="note">Note: {{ row.notes }}</p>
+                                {% else %}
+                                    <p class="note no-note">No notes</p>
+                                {% endif %}
 
-                                    <!-- Delete sale plan -->
-                                    <form class="del-sale-plan" action="/delete" method="post">
-                                        <input name="id-del" value="{{ row.id }}" type="hidden">
-                                        <button type="submit" class="material-icons del md-36">delete</button>
-                                    </form>
-                                </div>
+                                <!-- Delete sale plan -->
+                                <form class="del-sale-plan" action="/delete" method="post">
+                                    <input name="id-del" value="{{ row.id }}" type="hidden">
+                                    <button type="submit" class="material-icons del md-36">delete</button>
+                                </form>
                             </div>
+                        </div>
                         {% endfor %}
                     </section>
                 </section>
@@ -127,19 +131,23 @@
                     
                     <!-- Cards plans -->
                     <section class="container-sale-plan-cards">
-
                         {% for row in sold %}
                             <div class="sale-plan-cards">
-                                <h3 class="title-sale-plan">{{ row.name }}</h3>
+                                <h3>{{ row.name }}</h3>
                                 <div class="data-sale-plan">
                                     <p class="price">Price: {{ row.price }}</p>
-                                    <p class="goal">{{ row.goal_options }}: {{ row.goal }}</p>
                                     <p class="stock">Stock: {{ row.stock }}</p>
-                                    {% if row.date_start or row_date_end %}
+                                    <p class="goal">{{ row.goal_options }}: {{ row.goal }}</p>
+                                    {% if row.date_start or row.date_end %}
                                         <p class="d-start">Start: {{ row.date_start }}</p>
                                         <p class="d-end">End: {{ row.date_end }}</p>
                                     {% else %}
                                         <p class="no-d">No start or end dates for sales</p>
+                                    {% endif %}
+                                    {% if row.notes %}
+                                        <p class="note">Note: {{ row.notes }}</p>
+                                    {% else %}
+                                        <p class="note">No notes</p>
                                     {% endif %}
 
                                     <!-- Delete sale plan -->

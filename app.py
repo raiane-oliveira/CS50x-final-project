@@ -19,7 +19,7 @@ Session(app)
 db = SQL("sqlite:///planningSale.db")
 
 # Configure locale library to format numbers in money format
-locale.setlocale(locale.LC_MONETARY, 'en_US.UTF-8')
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 # Remember user ID for all functions
 userID = 0
@@ -165,23 +165,23 @@ def plansale():
         date_end = request.form.get("date-end")
 
         # Checks if the data is numeric
-        check_price = isnumber(request.form.get("price").replace(",", "."))
+        check_price = isnumber(locale.atof(request.form.get("price")))
         check_goal = None
 
         if goal_type == "Money goal":
-            check_goal = isnumber(request.form.get("goal-option").replace(",", "."))
+            check_goal = isnumber(locale.atof(request.form.get("goal-option")))
         else:
-            check_goal = isnumber(request.form.get("goal-option"))
+            check_goal = isnumber(locale.atoi(request.form.get("goal-option")))
 
         if not check_price or not check_goal:
             return render_template("plansale.html", message="Invalid price and/or goal!")
 
         # Store price and goal
-        price = locale.format_string(request.form.get("price"), monetary=True, grouping=True)
+        price = locale.atof(request.form.get("price"))
         price = locale.currency(price, grouping=True)
 
         if goal_type == "Money goal":
-            goal = locale.atof(request.form.get("goal-option").replace(',', ''))
+            goal = locale.atof(request.form.get("goal-option"))
             goal = locale.currency(goal, grouping=True)
         else:
             goal = locale.atoi(request.form.get("goal-option"))

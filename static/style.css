@@ -157,18 +157,23 @@ button.btn:hover {
     display: flex;
     position: relative;
     overflow-x: auto;
+    scroll-behavior: smooth;
 }
 
-::-webkit-scrollbar {
+.container-sale-plan-cards::-webkit-scrollbar {
     height: 10px;
     border-radius: 10px;
     background-color: #efe3d7;
 }
 
-::-webkit-scrollbar-thumb {
+.container-sale-plan-cards::-webkit-scrollbar-thumb {
     background-color: #5D5340;
     width: 10px;
     border-radius: 20px;
+}
+
+::-webkit-scrollbar {
+    background-color: transparent;
 }
 
 .sale-plan-cards {
@@ -228,16 +233,11 @@ button.btn:hover {
 }
 
 .no-d {
-    text-align: center;
     grid-area: no-d;
 }
 
 .note {
     grid-area: notes;
-}
-
-.no-note {
-    text-align: center;
 }
 
 .del-sale-plan {
