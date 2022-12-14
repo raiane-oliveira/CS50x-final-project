@@ -13,13 +13,13 @@ menuToggle.addEventListener("click", () => {
 
 
 // Marca a página atual que o usuário está
-// for (var i = 1; i < document.links.length; i++)
-// {
-//     if (document.links[i].href == document.URL)
-//     {
-//         document.links[i].className = 'active';
-//     }
-// }
+for (var i = 1; i < document.links.length; i++)
+{
+    if (document.links[i].href == document.URL)
+    {
+        document.links[i].className = 'active';
+    }
+}
 
 // Seleciona o formulário de planejar a venda 
 const formSale = document.querySelectorAll(".click-btn");
@@ -83,8 +83,7 @@ formSale.forEach(function(form) {
         
 });
 
-
-// Senha visível ou não
+ // Senha visível ou não
 eye = document.querySelector(".visibility");
 password = document.getElementById("password")
 confirm_password = document.getElementById("confirm_password")

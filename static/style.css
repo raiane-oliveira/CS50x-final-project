@@ -155,19 +155,32 @@ button.btn:hover {
 /* Index with sale plan */
 .container-sale-plan-cards {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    position: relative;
+    overflow-x: auto;
+}
+
+::-webkit-scrollbar {
+    height: 10px;
+    border-radius: 10px;
+    background-color: #efe3d7;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #5D5340;
+    width: 10px;
+    border-radius: 20px;
 }
 
 .sale-plan-cards {
-    width: 400px;
+    flex: 0 0 400px;
+    height: 100%;
     padding: 20px;
+    margin: 0 15px 15px 15px;
     
     border-radius: 20px;
     background-color: #768d69;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
     
-    height: 100%;
     color: #FFF9F3;
 }
 
@@ -180,6 +193,7 @@ button.btn:hover {
                          "goal goal"
                          "d-start d-end"
                          "no-d no-d"
+                         "notes notes"
                          "edit edit";
     grid-gap: 5px;
 
@@ -218,12 +232,19 @@ button.btn:hover {
     grid-area: no-d;
 }
 
+.note {
+    grid-area: notes;
+}
+
+.no-note {
+    text-align: center;
+}
+
 .del-sale-plan {
     display: flex;
     justify-content: end;
 
     grid-area: edit;
-    margin-top: 30px;
 }
 
 .material-icons.md-36.del {
@@ -272,7 +293,6 @@ button.btn:hover {
     text-align: center;
     
     width: 350px;
-    margin-bottom: 20px;
     padding: 15px;
     margin: 0 auto;
 
@@ -283,6 +303,7 @@ button.btn:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
     width: 100%;
 }
 
@@ -352,7 +373,7 @@ button.btn:hover {
     cursor: pointer;
 }
 
-.user-inputs input {
+.user-inputs input, .user-inputs textarea {
     border: 1.5px solid #8CA87C;
     border-radius: 18px;
     background-color: transparent;
@@ -457,15 +478,15 @@ button.btn:hover {
 
 .plansale-card form {
     display: grid;
-    grid-template-rows: repeat(5, 1fr);
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "name name"
                          "price goal"
                          "date1 date2"
                          "stock stock"
+                         "notes notes"
                          "button button";
     align-items: center;
-    grid-gap: 0 20px;
+    grid-gap: 10px 20px;
 }
 
 .plansale-card .user-inputs {
@@ -505,6 +526,17 @@ button.btn:hover {
 
 .stock {
     grid-area: stock;
+}
+
+.notes {
+    grid-area: notes;
+}
+
+.notes textarea {
+    font-family: "Sarala", sans-serif;
+    height: auto;
+    padding: 20px 30px;
+    resize: none;
 }
 
 .btn-login-register {
@@ -629,10 +661,8 @@ button.btn:hover {
         transition-duration: 0.5s;
         font-size: 3rem;
         line-height: 8rem;
+        border: none;
     }
-
-    /* form sale plan */
-    
 }
 
 @media (max-width: 460px) {

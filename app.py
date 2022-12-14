@@ -1,7 +1,6 @@
 import re
 import locale
 
-from datetime import datetime
 from cs50 import SQL
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
@@ -34,17 +33,18 @@ def index():
     if session.get("user_id"):
         userID = session["user_id"]
 
-        # Checks if have a sale plan and change the index page if yes
+        # Checks if have a sale plan
         salePlan = db.execute("SELECT * FROM salesPlan WHERE user_id = ?", userID)    
-        if salePlan:
+        if not salePlan:
+            return render_template("index.html", salePlan=salePlan)
             
-            # Seleciona todas as vendas com o filtro escolhido pelo usuário
-            selling = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "selling", userID)
-            not_started = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "not-started", userID)
-            sold = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "sold", userID)
+        # Seleciona todas as vendas com o filtro escolhido pelo usuário
+        selling = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "selling", userID)
+        not_started = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "not-started", userID)
+        sold = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "sold", userID)
 
-            return render_template("index.html", salePlan=salePlan, selling=selling, not_started=not_started, sold=sold)
-        return render_template("index.html", salePlan=salePlan)
+        return render_template("index.html", salePlan=salePlan, selling=selling, not_started=not_started, sold=sold)
+
 
     salePlan = None
     return render_template("index.html", salePlan=salePlan)
@@ -158,17 +158,18 @@ def plansale():
 
         # Store data from sale planning
         name = request.form.get("name")
-        date_start = request.form.get("date-start")
-        date_end = request.form.get("date-end")
         stock = int(request.form.get("stock"))
         goal_type = request.form.get("goal")
+        notes = request.form.get("notes")
+        date_start = request.form.get("date-start")
+        date_end = request.form.get("date-end")
 
         # Checks if the data is numeric
-        check_price = isnumber(request.form.get("price").replace(",", ""))
+        check_price = isnumber(request.form.get("price").replace(",", "."))
         check_goal = None
 
         if goal_type == "Money goal":
-            check_goal = isnumber(request.form.get("goal-option").replace(",", ""))
+            check_goal = isnumber(request.form.get("goal-option").replace(",", "."))
         else:
             check_goal = isnumber(request.form.get("goal-option"))
 
@@ -176,11 +177,11 @@ def plansale():
             return render_template("plansale.html", message="Invalid price and/or goal!")
 
         # Store price and goal
-        price = locale.atof(request.form.get("price").replace(',', '.'))
+        price = locale.format_string(request.form.get("price"), monetary=True, grouping=True)
         price = locale.currency(price, grouping=True)
 
         if goal_type == "Money goal":
-            goal = locale.atof(request.form.get("goal-option").replace(',', '.'))
+            goal = locale.atof(request.form.get("goal-option").replace(',', ''))
             goal = locale.currency(goal, grouping=True)
         else:
             goal = locale.atoi(request.form.get("goal-option"))
@@ -189,8 +190,8 @@ def plansale():
         filter = request.form.get("id")
 
         # Insert sale plan into the database
-        db.execute("INSERT INTO salesPlan (name, price, goal, date_start, date_end, stock, filters, goal_options, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                name, price, goal, date_start, date_end, stock, filter, goal_type, userID)
+        db.execute("INSERT INTO salesPlan (name, price, goal, date_start, date_end, stock, filters, goal_options, notes, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                name, price, goal, date_start, date_end, stock, filter, goal_type, notes, userID)
 
         return redirect("/")
 
