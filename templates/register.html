@@ -12,7 +12,7 @@ On The Sales | Sign Up
                 {{ message }}
             </div>
         {% endif %}
-        <section class="login-register-card">
+        <article class="login-register-card">
             <h2 class="title-login-register">Register</h2>
 
             <form action="/register" method="post">
@@ -21,31 +21,31 @@ On The Sales | Sign Up
                     <input autocomplete="off" autofocus id="username" name="username" required type="text">
                 </div>
 
-                <div class="user-inputs">
+                <section class="user-inputs">
                     <div class="label-user-inputs">
                         <label for="password">
                             Password <span class="required">*</span>
                         </label>
-                        <span class="material-icons md-18">visibility</span>
+                        <span class="material-icons md-18 visibility">visibility</span>
                     </div>
 
                     <input autocomplete="off" id="password" name="password" required type="password">
-                </div>
+                </section>
 
-                <div class="user-inputs">
+                <section class="user-inputs">
                     <div class="label-user-inputs">
                         <label for="confirm-password">
                             Confirm Password <span class="required">*</span>
                         </label>
-                        <span class="material-icons md-18">visibility</span>
+                        <span class="material-icons md-18 visibility">visibility</span>
                     </div>
 
                     <input autocomplete="off" id="confirm-password" name="confirm-password" required type="password">
-                </div>
+                </section>
 
                 <input class="btn-login-register" type="submit" value="Continue">
             </form>
-        </section>
+        </article>
     </div>
 
 {% endblock %}

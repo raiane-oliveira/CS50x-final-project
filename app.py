@@ -29,7 +29,7 @@ userID = 0
 def index():
     """ Render index page apresentation"""
 
-    # Remember user id
+    # Checks if have user id
     if session.get("user_id"):
         userID = session["user_id"]
 
@@ -38,13 +38,12 @@ def index():
         if not salePlan:
             return render_template("index.html", salePlan=salePlan)
             
-        # Seleciona todas as vendas com o filtro escolhido pelo usuário
+        # Selects all sales with the filter chosen by the user
         selling = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "selling", userID)
         not_started = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "not-started", userID)
         sold = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "sold", userID)
 
         return render_template("index.html", salePlan=salePlan, selling=selling, not_started=not_started, sold=sold)
-
 
     salePlan = None
     return render_template("index.html", salePlan=salePlan)
@@ -61,6 +60,34 @@ def delete():
     id = request.form.get("id-del")
     if id:
         db.execute("DELETE FROM salesPlan WHERE id = ? AND user_id = ?", id, userID)
+    return redirect("/")
+
+
+@app.route("/account", methods=["POST", "GET"])
+def account():
+    """Delete the user account"""
+
+    # Checks if have user_id
+    if session.get("user_id"):
+        userID = session["user_id"]
+
+        # route via POST
+        if request.method == "POST":
+
+            # Delete all data from user account
+            db.execute("DELETE FROM salesPlan WHERE user_id = ?", userID)
+
+            # Delete account
+            db.execute("DELETE FROM users WHERE id = ?", userID)
+
+            # Free session
+            session.clear()
+
+            return redirect("/")
+    
+        # route via GET 
+        return render_template("account.html")
+    
     return redirect("/")
 
 
@@ -107,7 +134,7 @@ def register():
         password = request.form.get("password")
         confirm_password = request.form.get("confirm-password")
 
-        # Acess duplicates
+        # Access duplicates
         duplicate_username = db.execute("SELECT username FROM users WHERE username = ?", username)
 
         # Checking erros
@@ -144,59 +171,57 @@ def logout():
 def plansale():
     """Plan a sale of the user"""
 
-    # Remember user id
-    userID = session["user_id"]
+    # Checks if have user id
+    if session.get("user_id"):
+        userID = session["user_id"]
 
-    # route via POST
-    if request.method == "POST":
+        # route via POST
+        if request.method == "POST":
 
-        # Checking erros
-        if not request.form.get("name") or not request.form.get("price") or not request.form.get("goal") or not request.form.get("stock"):
-            return render_template("plansale.html", message="Blank required fields!")
-        if request.form.get("goal") not in ["Money goal", "Sales goal"]:
-            return render_template("plansale.html", message="Invalid type of goal")
+            # Checking erros
+            if not request.form.get("name") or not request.form.get("price") or not request.form.get("goal") or not request.form.get("stock"):
+                return render_template("plansale.html", message="Blank required fields!")
+            if request.form.get("goal") not in ["Money goal", "Sales goal"]:
+                return render_template("plansale.html", message="Invalid type of goal")
 
-        # Store data from sale planning
-        name = request.form.get("name")
-        stock = int(request.form.get("stock"))
-        goal_type = request.form.get("goal")
-        notes = request.form.get("notes")
-        date_start = request.form.get("date-start")
-        date_end = request.form.get("date-end")
+            # Store data from sale planning
+            name = request.form.get("name")
+            stock = int(request.form.get("stock"))
+            goal_type = request.form.get("goal")
+            notes = request.form.get("notes")
+            date_start = request.form.get("date-start")
+            date_end = request.form.get("date-end")
 
-        # Checks if the data is numeric
-        check_price = isnumber(locale.atof(request.form.get("price")))
-        check_goal = None
+            # Checks if the price and goal is numeric
+            check_price = isnumber(request.form.get("price"))
+            check_goal = isnumber(request.form.get("goal-option"))
+            if not check_price or not check_goal:
+                return render_template("plansale.html", message="Invalid price and/or goal!")
 
-        if goal_type == "Money goal":
-            check_goal = isnumber(locale.atof(request.form.get("goal-option")))
-        else:
-            check_goal = isnumber(locale.atoi(request.form.get("goal-option")))
+            # Convert price to US dollar
+            price = locale.atof(request.form.get("price"))
+            price = locale.currency(price, grouping=True)
 
-        if not check_price or not check_goal:
-            return render_template("plansale.html", message="Invalid price and/or goal!")
+            # Convert money goal to US dollar
+            if goal_type == "Money goal":
+                goal = locale.atof(request.form.get("goal-option"))
+                goal = locale.currency(goal, grouping=True)
+            else:
+                goal = locale.atoi(request.form.get("goal-option"))
 
-        # Store price and goal
-        price = locale.atof(request.form.get("price"))
-        price = locale.currency(price, grouping=True)
+            # Store filter
+            filter = request.form.get("id")
 
-        if goal_type == "Money goal":
-            goal = locale.atof(request.form.get("goal-option"))
-            goal = locale.currency(goal, grouping=True)
-        else:
-            goal = locale.atoi(request.form.get("goal-option"))
+            # Insert sale plan into the database
+            db.execute("INSERT INTO salesPlan (name, price, goal, date_start, date_end, stock, filters, goal_options, notes, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    name, price, goal, date_start, date_end, stock, filter, goal_type, notes, userID)
 
-        # Store filter
-        filter = request.form.get("id")
+            return redirect("/")
 
-        # Insert sale plan into the database
-        db.execute("INSERT INTO salesPlan (name, price, goal, date_start, date_end, stock, filters, goal_options, notes, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                name, price, goal, date_start, date_end, stock, filter, goal_type, notes, userID)
+        # route via GET
+        return render_template("plansale.html")
 
-        return redirect("/")
-
-    # route via GET
-    return render_template("plansale.html")
+    return redirect("/")
 
 
 # Checks if the field is numeric

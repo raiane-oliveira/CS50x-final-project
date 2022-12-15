@@ -1,4 +1,4 @@
-// Menu responsivo
+// Responsive menu
 let show = true;
 
 const header = document.querySelector("header");
@@ -12,7 +12,7 @@ menuToggle.addEventListener("click", () => {
 });
 
 
-// Marca a página atual que o usuário está
+// Marks the current page the user is on
 for (var i = 1; i < document.links.length; i++)
 {
     if (document.links[i].href == document.URL)
@@ -21,13 +21,13 @@ for (var i = 1; i < document.links.length; i++)
     }
 }
 
-// Seleciona o formulário de planejar a venda 
+// Select the sales planning form
 const formSale = document.querySelectorAll(".click-btn");
 const onSale = document.querySelector(".on-sale");
 const backgroundSale = document.querySelector(".background-sale");
 const closePlanSale = document.querySelectorAll(".material-icons");
 
-// Seleciona o id dos filtros
+// Select the filters id
 var id = 0;
 var formOnSale = document.querySelector(".form-planSale");
 
@@ -40,7 +40,7 @@ document.querySelectorAll("button").forEach(function(button) {
     });
 });
 
-// Abre o card do formulário e adiciona um filtro pra cada um deles
+// Open the form card and add a filter for each of them
 formSale.forEach(function(form) {
 
     form.addEventListener("submit", function(e) {
@@ -83,18 +83,21 @@ formSale.forEach(function(form) {
         
 });
 
- // Senha visível ou não
-eye = document.querySelector(".visibility");
+
+// Visible password
+eyes = document.querySelectorAll(".visibility");
 password = document.getElementById("password")
-confirm_password = document.getElementById("confirm_password")
+confirm_password = document.getElementById("confirm-password")
 
-eye.addEventListener("click", () => {
-    password.type = 'text';
-    confirm_password.type = 'text';
-});
+eyes.forEach(function(eye) {
 
-// // Para que a senha não fique exposta após mover a imagem
-eye.addEventListener("mousemove", () => {
-    password.type = 'password';
-    confirm_password.type = 'password';
+    eye.addEventListener("click", () => {
+        password.type = 'text';
+        confirm_password.type = 'text';
+    });
+
+    eye.addEventListener("mousemove", () => {
+        password.type = 'password';
+        confirm_password.type = 'password';
+    });
 });

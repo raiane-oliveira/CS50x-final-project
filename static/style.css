@@ -321,12 +321,14 @@ button.btn:hover {
     background-color: #FCF4EC;
     border-radius: 20px;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
+    transition: all 700ms ease-out;
 }
 
 .title-login-register {
     font-family: "Montserrat", sans-serif;
     font-weight: 600;
     font-size: 3.8rem;
+    text-align: center;
 }
 
 .subtitle-login {
@@ -388,10 +390,11 @@ button.btn:hover {
     height: 50px;
     width: 100%;
     margin: 20px 0;
-
+    
     color: white;
     font-size: 2.5rem;
     cursor: pointer;
+    transition: background-color 300ms ease-out;
 }
 
 .btn-login-register:hover {
@@ -537,6 +540,18 @@ button.btn:hover {
 
 .btn-login-register {
     grid-area: button;
+}
+
+/* Delete account page */
+.title-account {
+    font-family: "Montserrat", sans-serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.btn-delete-account:hover {
+    background-color: rgb(191, 87, 87);
 }
 
 /* Media Queries Index Page */

@@ -9,7 +9,7 @@
     {% if not session["user_id"] %}
 
         <!-- Index without sale plan -->
-        <div class="container-index">
+        <article class="container-index">
                 <section class="introduction-logo">
                     <img src="/static/imgs/logo.svg" alt="Logo On The Sales">
                     <div class="texts-introduction">
@@ -30,18 +30,18 @@
                     </div>
 
                 <!-- Footer -->
-                <div class="footer">
+                <section class="footer">
                     <p>CS50’s Introduction to Computer Science Final Project.</p>
                     <p>
                         Developed by <a target="_blank" href="https://github.com/raiane-oliveira">Raiane Oliveira</a>. 
                     </p>
-                </div>        
+                </section>        
             </section>
-        </div>
+        </article>
     {% else %}
 
         <!-- Index wth sale plan card -->
-        <div class="container-planSale">
+        <article class="container-planSale">
             {% if salePlan %}
 
                 <!-- Selling -->
@@ -169,7 +169,7 @@
                 </section>
 
             {% endif %}
-        </div>
+        </article>
     {% endif %}
 
 {% endblock %}
