@@ -15,7 +15,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 library to user SQLite database
-db = SQL("sqlite:///planningSale.db")
+db = SQL("sqlite:///onSalesPlan.db")
 
 # Configure locale library to format numbers in money format
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
@@ -168,7 +168,7 @@ def logout():
 
 @app.route("/plansale", methods=["POST", "GET"])
 def plansale():
-    """Plan a sale of the user"""
+    """Plan the user sale"""
 
     # Checks if have user id
     if session.get("user_id"):
