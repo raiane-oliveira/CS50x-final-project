@@ -1,6 +1,6 @@
 # On The Sales
 
-#### Video Demo: <a href="https://youtu.be/LLb7Rdmefss">On The Sales - CS50 Final Project</a>
+#### Video Demo: <a target="_blank" href="https://youtu.be/LLb7Rdmefss">On The Sales - CS50 Final Project</a>
 
 <br>
 On The Sales is a web application developed to make life easier for those who like to organize themselves when planning their sales.
