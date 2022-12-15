@@ -192,8 +192,8 @@ def plansale():
             date_end = request.form.get("date-end")
 
             # Checks if the price and goal is numeric
-            check_price = isnumber(request.form.get("price"))
-            check_goal = isnumber(request.form.get("goal-option"))
+            check_price = isnumber(locale.atof(request.form.get("price")))
+            check_goal = check_goal = isnumber(locale.atof(request.form.get("goal-option")))
             if not check_price or not check_goal:
                 return render_template("plansale.html", message="Invalid price and/or goal!")
 
@@ -225,6 +225,7 @@ def plansale():
 
 # Checks if the field is numeric
 def isnumber(value):
+
     try:
         float(value)
     except ValueError:
