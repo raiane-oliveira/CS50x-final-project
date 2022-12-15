@@ -39,6 +39,9 @@ The website organizes name, price, goals, planning dates and small notes of your
 
 - `requirements.txt` - contains all the libraries used for this application.
 
+<br>
+__The entire site is responsive and with error messages if something happens__
+
 ## Design choice
 
 <hr>
