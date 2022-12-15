@@ -1,4 +1,3 @@
-import re
 import locale
 
 from cs50 import SQL
@@ -231,7 +230,3 @@ def isnumber(value):
     except ValueError:
         return False
     return True
-
-
-if __name__ == "__main__":
-    app.run(debug=True)

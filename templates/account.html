@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    On The Sales | Delete account
+{% endblock %}
+
+{% block main %}
+
+    {% if session["user_id"] %}
+        <div class="container-login-register">
+            <article class="login-register-card">
+                <h2 class="title-account">Are you sure you want to delete your account?</h2>
+
+                <form action="/account" method="post">
+                    <input class="btn-login-register btn-delete-account" type="submit" value="Delete">
+                </form>
+
+                <p class="subtitle-login">
+                    <a href="/">Return to main page</a>
+                </p>
+            </article>
+        </div>
+    {% endif %}
+
+{% endblock %}
