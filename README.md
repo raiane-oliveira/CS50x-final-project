@@ -4,7 +4,7 @@
 
 On The Sales is a web application developed to make life easier for those who like to organize themselves when planning their sales.
 
-The website organizes name, price, goals, planning dates and small notes of your sale in cards filtered by _Selling_, _Not started_ and _Sold_, where each one represents a state of your sales.
+The website organizes name, price, goals, planning dates, stock and small notes of your sale in cards filtered by _Selling_, _Not started_ and _Sold_, where each one represents a state of your sales.
 
 ## What each file does?
 
@@ -40,9 +40,7 @@ The website organizes name, price, goals, planning dates and small notes of your
 
 ## Design choice
 
-<hr>
 I made the initial design in Figma, but I ended up changing some things in the process, because I think it was more harmonious for the site.
 You can view it <a target="_blank" href="https://www.figma.com/file/EfBaOIxMYA2G3I8xFviYkt/Final-Project?node-id=0%3A1&t=NOcaQXEuIFfbgn16-1">here</a> the initial design.
 
-<br>
 I chose a color palette with more green and brown tones because I believe it brings greater elegance without ceasing to be cozy for the user
