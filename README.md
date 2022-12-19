@@ -2,14 +2,11 @@
 
 #### Video Demo: <a target="_blank" href="https://youtu.be/LLb7Rdmefss">On The Sales - CS50 Final Project</a>
 
-<br>
 On The Sales is a web application developed to make life easier for those who like to organize themselves when planning their sales.
 
 The website organizes name, price, goals, planning dates and small notes of your sale in cards filtered by _Selling_, _Not started_ and _Sold_, where each one represents a state of your sales.
 
 ## What each file does?
-
-<hr>
 
 - `static/` - contains the CSS and JavaScript file and the images used.
 
@@ -39,8 +36,7 @@ The website organizes name, price, goals, planning dates and small notes of your
 
 - `requirements.txt` - contains all the libraries used for this application.
 
-<br>
-__The entire site is responsive and with error messages if something happens__
+**The entire site is responsive and with error messages if something happens**
 
 ## Design choice
 
