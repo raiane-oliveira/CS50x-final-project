@@ -129,9 +129,9 @@ def register():
     if request.method == "POST":
 
         # Gets data
-        username = request.form.get("username")
-        password = request.form.get("password")
-        confirm_password = request.form.get("confirm-password")
+        username = request.form.get("username").strip()
+        password = request.form.get("password").strip()
+        confirm_password = request.form.get("confirm-password").strip()
 
         # Access duplicates
         duplicate_username = db.execute("SELECT username FROM users WHERE username = ?", username)
