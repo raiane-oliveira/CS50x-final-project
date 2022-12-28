@@ -2,7 +2,7 @@
 
 #### Video Demo: <a target="_blank" href="https://youtu.be/LLb7Rdmefss">On The Sales - CS50 Final Project</a>
 
-On The Sales is a web application developed to make life easier for those who like to organize themselves when planning their sales.
+On The Sales is a responsive web application developed to make life easier for those who like to organize themselves when planning their sales.
 
 The website organizes name, price, goals, planning dates, stock and small notes of your sale in cards filtered by _Selling_, _Not started_ and _Sold_, where each one represents a state of your sales.
 
