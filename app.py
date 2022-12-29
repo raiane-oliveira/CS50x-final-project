@@ -17,7 +17,7 @@ Session(app)
 # Configure CS50 library to user SQLite database
 db = SQL("sqlite:///onSalesPlan.db")
 
-# Configure locale library to format numbers in money format
+# Configure locale library to format numbers in USD money format
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 # Remember user ID for all functions
@@ -41,6 +41,13 @@ def index():
         selling = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "selling", userID)
         not_started = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "not-started", userID)
         sold = db.execute("SELECT * FROM salesPlan WHERE filters = ? AND user_id = ?", "sold", userID)
+
+        # Checks if have an id edit
+        # if request.args.get("id-edit"):
+        #     id = request.args.get("id-edit")
+        #     editSalePlan = db.execute("SELECT * FROM salesPlan WHERE id = ? AND user_id = ?", id, userID)
+        #     print(id)
+        #     print(editSalePlan)
 
         return render_template("index.html", salePlan=salePlan, selling=selling, not_started=not_started, sold=sold)
 
@@ -193,7 +200,7 @@ def plansale():
 
             # Checks if the price and goal is numeric
             check_price = isnumber(locale.atof(request.form.get("price")))
-            check_goal = check_goal = isnumber(locale.atof(request.form.get("goal-option")))
+            check_goal = isnumber(locale.atof(request.form.get("goal-option")))
             if not check_price or not check_goal:
                 return render_template("plansale.html", message="Invalid price and/or goal!")
 

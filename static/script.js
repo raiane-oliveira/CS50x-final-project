@@ -36,7 +36,7 @@ document.querySelectorAll("button").forEach(function(button) {
     button.addEventListener("click", function(event) {
 
         var element = event.target;
-        id = element.id;   
+        id = element.id; 
     });
 });
 

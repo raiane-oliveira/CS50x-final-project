@@ -20,6 +20,10 @@ a {
     color: black;
 }
 
+fieldset {
+    border: none;
+}
+
 .material-icons {
     cursor: pointer;
 }
@@ -162,7 +166,6 @@ button.btn:hover {
     display: flex;
     position: relative;
     overflow-x: auto;
-    scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar {
@@ -241,11 +244,28 @@ button.btn:hover {
     grid-area: notes;
 }
 
-.del-sale-plan {
+.edit-del-sale-plan {
+    grid-area: edit;
     display: flex;
     justify-content: end;
+    gap: 10px;
+}
 
-    grid-area: edit;
+.btn-edit {
+    width: 100px;
+    padding: 3px;
+    border: none;
+    border-radius: 10px;
+    background-color: #FCF4EC;
+    color: #768d69;
+    font-family: "Sarala", sans-serif;
+    font-size: 1.7rem;
+}
+
+.btn-edit:hover {
+    background-color: #8CA87C;
+    color: #FCF4EC;
+    cursor: pointer;
 }
 
 .material-icons.md-36.del {

@@ -52,9 +52,9 @@
                     </div>
             
                     <!-- Cards plans -->
-                    <section class="container-sale-plan-cards">
+                    <div class="container-sale-plan-cards">
                         {% for row in selling %}
-                            <div class="sale-plan-cards">
+                            <div class="sale-plan-cards content">
                                 <h3>{{ row.name }}</h3>
                                 <div class="data-sale-plan">
                                     <p class="price">Price: {{ row.price }}</p>
@@ -69,18 +69,21 @@
                                     {% if row.notes %}
                                         <p class="note">Note: {{ row.notes }}</p>
                                     {% else %}
-                                        <p class="note no-note">No notes</p>
+                                        <p class="note">No notes</p>
                                     {% endif %}
 
-                                    <!-- Delete sale plan -->
-                                    <form class="del-sale-plan" action="/delete" method="post">
-                                        <input name="id-del" value="{{ row.id }}" type="hidden">
-                                        <button type="submit" class="material-icons del md-36">delete</button>
-                                    </form>
+                                    <div class="edit-del-sale-plan">
+
+                                        <!-- Delete sale plan -->
+                                        <form action="/delete" method="post">
+                                            <input name="id-del" value="{{ row.id }}" type="hidden">
+                                            <button type="submit" class="material-icons del md-36">delete</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
-                    </section>
+                    </div>
                 </section>
 
                 <!-- Not Started -->
@@ -91,7 +94,7 @@
                     </div>
 
                     <!-- Cards plans -->
-                    <section class="container-sale-plan-cards">
+                    <div class="container-sale-plan-cards">
                         {% for row in not_started %}
                         <div class="sale-plan-cards">
                             <h3>{{ row.name }}</h3>
@@ -108,18 +111,21 @@
                                 {% if row.notes %}
                                     <p class="note">Note: {{ row.notes }}</p>
                                 {% else %}
-                                    <p class="note no-note">No notes</p>
+                                    <p class="note">No notes</p>
                                 {% endif %}
 
-                                <!-- Delete sale plan -->
-                                <form class="del-sale-plan" action="/delete" method="post">
-                                    <input name="id-del" value="{{ row.id }}" type="hidden">
-                                    <button type="submit" class="material-icons del md-36">delete</button>
-                                </form>
+                                <div class="edit-del-sale-plan">
+
+                                    <!-- Delete sale plan -->
+                                    <form action="/delete" method="post">
+                                        <input name="id-del" value="{{ row.id }}" type="hidden">
+                                        <button type="submit" class="material-icons del md-36">delete</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         {% endfor %}
-                    </section>
+                    </div>
                 </section>
 
                 <!-- Sold -->
@@ -130,7 +136,7 @@
                     </div>
                     
                     <!-- Cards plans -->
-                    <section class="container-sale-plan-cards">
+                    <div class="container-sale-plan-cards">
                         {% for row in sold %}
                             <div class="sale-plan-cards">
                                 <h3>{{ row.name }}</h3>
@@ -150,15 +156,18 @@
                                         <p class="note">No notes</p>
                                     {% endif %}
 
-                                    <!-- Delete sale plan -->
-                                    <form class="del-sale-plan" action="/delete" method="post">
-                                        <input name="id-del" value="{{ row.id }}" type="hidden">
-                                        <button type="submit" class="material-icons del md-36">delete</button>
-                                    </form>
+                                    <div class="edit-del-sale-plan">
+
+                                        <!-- Delete sale plan -->
+                                        <form action="/delete" method="post">
+                                            <input name="id-del" value="{{ row.id }}" type="hidden">
+                                            <button type="submit" class="material-icons del md-36">delete</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
-                    </section>
+                    </div>
                 </section>
             {% else %}
 

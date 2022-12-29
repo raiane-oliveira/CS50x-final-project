@@ -16,12 +16,12 @@
             <h2 class="title-login-register">Login</h2>
 
             <form action="/login" method="post">
-                <div class="user-inputs">
+                <fieldset class="user-inputs">
                     <label for="username">Username <span class="required">*</span></label>
-                    <input autocomplete="off" autofocus id="username" name="username" required type="text">
-                </div>
+                    <input autocomplete="username" autofocus id="username" name="username" required type="text">
+                </fieldset>
 
-                <div class="user-inputs">
+                <fieldset class="user-inputs">
                     <div class="label-user-inputs">
                         <label for="password">
                             Password <span class="required">*</span>
@@ -30,7 +30,7 @@
                     </div>
 
                     <input autocomplete="off" id="password" name="password" required type="password">
-                </div>
+                </fieldset>
                 
                 <input class="btn-login-register" type="submit" value="Continue">
             </form>
